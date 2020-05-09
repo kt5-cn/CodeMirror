@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://www.w3cschool.cn/tools/index?name=html_minifier -->
+<html lang="zh-cn">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML / css/ JS 在线压缩工具</title>
+    <meta
+      name="keywords"
+      content="HTML, css, JS, 在线压缩,压缩工具,在线压缩工具"
+    />
+    <meta
+      name="description"
+      content="这是一款可在线压缩 HTML、css 与 JS 的工具，可根据用户的不同要求实现个性化的代码压缩功能"
+    />
+    <!-- Bootstrap -->
+    <link href="./static/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Styles -->
+    <link href="./static/css/theme.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./static/css/tools.css"
+    />
+    <style>
+      .minify-button {
+        margin: 16px 0;
+      }
+      #outer-wrapper {
+        overflow: hidden;
+        font-family: 'Cambria', Georgia, Times, 'Times New Roman', serif;
+        margin-top: 0;
+        padding-top: 0;
+      }
+      #outer-wrapper textarea {
+        height: 30em;
+      }
+      #outer-wrapper h1 {
+        margin-top: 0.5em;
+        font-size: 1.25em;
+      }
+      #outer-wrapper h1 span {
+        font-size: 0.6em;
+      }
+      #outer-wrapper button {
+        font-weight: bold;
+        width: 100px;
+      }
+
+      .wrapper {
+        width: 65%;
+        float: left;
+      }
+      #input {
+        width: 99%;
+        height: 18em;
+      }
+      #output {
+        width: 99%;
+        height: 18em;
+        margin-bottom: 2em;
+      }
+      #options {
+        float: right;
+        width: 33%;
+        padding-left: 1em;
+      }
+      #options ul {
+        list-style: none;
+        padding: 0.5em;
+        overflow: hidden;
+        background: #ffe;
+        margin-top: 0;
+      }
+      #options ul li {
+        float: left;
+        clear: both;
+        padding-bottom: 0.5em;
+      }
+      #options ul li div {
+        margin-left: 1.75em;
+      }
+      #options label,
+      #options input {
+        float: left;
+      }
+      #options label.sub-option {
+        margin-left: 22px;
+        margin-right: 5px;
+      }
+      #options input {
+        margin-right: 0.5em;
+      }
+      #stats {
+        margin-bottom: 2em;
+        overflow: hidden;
+        margin-top: 0;
+      }
+      #todo {
+        font-family: monospace;
+        margin-bottom: 2em;
+      }
+      #warning {
+        background: #fee;
+        padding: 0.25em;
+        display: inline-block;
+        margin-top: 0;
+        font-size: 0.85em;
+      }
+      #lint-report {
+        font-family: monospace;
+      }
+      #report {
+        margin-bottom: 5em;
+      }
+      #report ul {
+        margin: 0.5em;
+        padding-left: 1em;
+        list-style: none;
+      }
+
+      .success {
+        color: green;
+      }
+      .failure {
+        color: red;
+      }
+      .quiet {
+        font-size: 0.85em;
+        color: #888;
+      }
+      .short {
+        display: inline-block;
+        width: 20em;
+        margin-top: 0.25em;
+      }
+
+      .controls span {
+        margin-right: 0.5em;
+        margin-left: 1em;
+      }
+      .controls a {
+        margin-left: 0.1em;
+      }
+      .controls a:focus,
+      .controls a:hover {
+        text-decoration: none;
+      }
+
+      .deprecated-element,
+      .deprecated-attribute {
+        color: red;
+      }
+      .presentational-element,
+      .presentational-attribute,
+      .inaccessible-attribute {
+        color: #ff8c00;
+      }
+
+      .unsafe {
+        color: #f33;
+      }
+      .footer p {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper" class="container-fluid">
+      <!-- container-fluid -->
+      <div class="row">
+        <div class="col-md-12">
+          <h1 style="text-align: left;"><a href="/fe" style="text-decoration: none;">首页</a> | ▀▄ HTML / css / JS 在线压缩工具</h1>
+          <h2 class="alert alert-success" style="font-size: 16px;">
+            这是一款可在线压缩HTML、css与JS的工具，可根据用户的不同要求实现个性化的代码压缩功能，还可以同步提供相应的代码压缩结果报告。非常方便实用。
+          </h2>
+          <br />
+          <hr />
+          <div>
+            <div id="outer-wrapper">
+              <div class="wrapper">
+                <h1 style="text-align: left;">HTML / css / JS 在线压缩</h1>
+                <textarea
+                  rows="8"
+                  cols="40"
+                  id="input"
+                  class="form-control"
+                ></textarea>
+                <div class="minify-button">
+                  <button type="button" id="minify-btn" class="btn btn-primary">
+                    压缩 HTML
+                  </button>
+                  <button
+                    type="button"
+                    id="minify-css-btn"
+                    class="btn btn-primary"
+                  >
+                    压缩 CSS
+                  </button>
+                  <button
+                    type="button"
+                    id="minify-js-btn"
+                    class="btn btn-primary"
+                  >
+                    压缩 JS
+                  </button>
+                </div>
+                <textarea
+                  rows="8"
+                  cols="40"
+                  id="output"
+                  readonly="readonly"
+                  class="form-control"
+                  onclick="this.select();"
+                ></textarea>
+                <p id="stats"></p>
+                <div id="lint-report">
+                  <div id="report"></div>
+                </div>
+              </div>
+              <div id="options">
+                <ul>
+                  <li>
+                    <input
+                      id="remove-comments"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="remove-comments">删除注释</label>
+                    <span
+                      class="quiet short"
+                      style="margin-left: 1.5em; float: left; clear: both;"
+                    >
+                      有条件的注释是不删除，但其内部（微不足道的）空格去掉。
+                    </span>
+                  </li>
+                  <li>
+                    <input
+                      id="remove-comments-from-cdata"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="remove-comments-from-cdata"
+                      >删除scripts和styles中的注释</label
+                    >
+                  </li>
+                  <li>
+                    <input
+                      id="remove-cdata-sections-from-cdata"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="remove-cdata-sections-from-cdata"
+                      >删除 CDATA sections 从scripts 和 styles中</label
+                    >
+                  </li>
+                  <li>
+                    <input
+                      id="collapse-whitespace"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="collapse-whitespace">折叠（简化）空格</label>
+                  </li>
+                  <li>
+                    <input id="conservative-collapse" type="checkbox" />
+                    <label for="conservative-collapse">简化旧的空白</label>
+                  </li>
+                  <li>
+                    <input
+                      id="collapse-boolean-attributes"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="collapse-boolean-attributes">
+                      boolean 属性简化
+                      <br />
+                      <span class="quiet short">
+                        (e.g.
+                        <code
+                          >&lt;... disabled="disabled"&gt; → &lt;...
+                          disabled&gt;</code
+                        >)
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      id="remove-attribute-quotes"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="remove-attribute-quotes">
+                      删除引号
+                      <br />
+                      <span class="quiet">
+                        (e.g.
+                        <code>&lt;p class="foo"&gt; → &lt;p class=foo&gt;</code
+                        >)
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      id="remove-redundant-attributes"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="remove-redundant-attributes"
+                      >去除多余的属性值</label
+                    >
+                    <div class="quiet">
+                      <code>&lt;script language="Javascript" ...&gt;</code
+                      ><br />
+                      <code>&lt;form method="get" ...&gt;</code><br />
+                      <code>&lt;input type="text" ...&gt;</code><br />
+                      <code
+                        >&lt;script src="/statics/tools/..."
+                        charset="..."&gt;</code
+                      ><br />
+                      <code>&lt;a id="..." name="..."&gt;</code><br />
+                      <code>&lt;... onclick="javascript:..." ...&gt;</code>
+                    </div>
+                  </li>
+                  <li>
+                    <input
+                      id="use-short-doctype"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label
+                      for="use-short-doctype"
+                      title="i.e. &lt;!DOCTYPE html&gt;"
+                    >
+                      用简写的doctype
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      id="remove-empty-attributes"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="remove-empty-attributes">
+                      删除空的属性
+                      <br />
+                      <span class="quiet short">
+                        有效的属性是: class, id, style, title, lang, dir, event
+                        attributes
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      id="remove-optional-tags"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="remove-optional-tags">
+                      删除可选标签
+                      <br />
+                      <span class="quiet short">
+                        目前只有
+                        <code>&lt;/html&gt;</code>, <code>&lt;/head&gt;</code>,
+                        <code>&lt;/body&gt;</code>,
+                        <code>&lt;/option&gt;</code>
+                        <code>&lt;/thead&gt;</code>,
+                        <code>&lt;/tbody&gt;</code>,
+                        <code>&lt;/tfoot&gt;</code>, 和
+                        <code>&lt;/tr&gt;</code>
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input id="remove-ignored" type="checkbox" />
+                    <label for="remove-ignored">
+                      删除忽略的标签
+                      <br />
+                      <span class="quiet short">
+                        目前只有以这个标签
+                        <code>&lt;% ... %&gt;</code>
+                        开始，这个标签
+                        <code>&lt;? ... ?&gt;</code>
+                        结束的
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input id="remove-empty-elements" type="checkbox" />
+                    <label for="remove-empty-elements" class="unsafe">
+                      删除空的元素
+                      <br />
+                      <span class="quiet short">
+                        除了 <code>textarea</code>之外
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input id="remove-script-type-attributes" type="checkbox" />
+                    <label for="remove-script-type-attributes">
+                      删除 <code>type="text/javascript"</code> 从
+                      <code>script</code>'s
+                      <br />
+                      <span class="quiet short">
+                        像 "text/javascript" (e.g. "text/vbscript") 是不删除的.
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      id="remove-style-link-type-attributes"
+                      type="checkbox"
+                    />
+                    <label for="remove-style-link-type-attributes">
+                      删除 <code>type="text/css"</code> from
+                      <code>style</code>'s and <code>link</code>'s
+                      <br />
+                      <span class="quiet short">
+                        像 "text/css" (e.g. "text/plain" or
+                        "application/atom+xml") 是不删除的
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input id="case-sensitive" type="checkbox" />
+                    <label for="case-sensitive">
+                      属性区分大小写
+                      <br />
+                      <span class="quiet short">
+                        当压缩SVG的时候
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input id="keep-closing-slash" type="checkbox" />
+                    <label for="keep-closing-slash">
+                      保留关闭的斜线
+                      <br />
+                      <span class="quiet short">
+                        在压缩 SVG的时候有用
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <input id="minify-js" checked="checked" type="checkbox" />
+                    <label for="minify-js">
+                      Minify JS
+                    </label>
+                  </li>
+                  <li>
+                    <input id="minify-js-templates" type="checkbox" />
+                    <label for="minify-js-templates">
+                      Minify JS 模板
+                      <br />
+                      <span class="quiet short">
+                        Minify HTML
+                        脚本内部使用自定义类型属性如"text/x-handlebars-template"
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label for="minify-js-templates-type" class="sub-option">
+                      模板类型
+                    </label>
+                    <input id="minify-js-templates-type" type="input" />
+                  </li>
+                  <li>
+                    <input id="minify-css" checked="checked" type="checkbox" />
+                    <label for="minify-css">
+                      压缩 CSS
+                    </label>
+                  </li>
+                  <li>
+                    <input id="minify-urls" type="checkbox" />
+                    <label for="minify-urls">
+                      压缩 URLs
+                      <br />
+                      <span class="quiet short">
+                        从相对路径转换为绝对路径
+                      </span>
+                    </label>
+                  </li>
+                  <li>
+                    <label for="minify-urls-siteurl" class="sub-option">
+                      Site URL
+                    </label>
+                    <input id="minify-urls-siteurl" type="input" />
+                  </li>
+                  <li>
+                    <input
+                      id="use-htmllint"
+                      checked="checked"
+                      type="checkbox"
+                    />
+                    <label for="use-htmllint">
+                      通过 HTML lint验证input
+                    </label>
+                  </li>
+                  <li>
+                    <label for="max-line-length" class="sub-option">
+                      最大线长度
+                    </label>
+                    <input
+                      id="max-line-length"
+                      value="0"
+                      min="0"
+                      max="10000"
+                      type="number"
+                    />
+                  </li>
+                </ul>
+                <div class="controls">
+                  <span>选择:</span>
+                  <a
+                    href="https://www.w3cschool.cn/statics/tools/#"
+                    id="select-all"
+                    >全选</a
+                  >,
+                  <a
+                    href="https://www.w3cschool.cn/statics/tools/#"
+                    id="select-none"
+                    >全部选</a
+                  >,
+                  <a
+                    href="https://www.w3cschool.cn/statics/tools/#"
+                    id="select-safe"
+                    >安全压缩</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </div>
+      </div>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+    </div>
+    <script
+      src="./static/js/jquery.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./static/js/htmlminifier.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./static/js/uglify.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./static/js/cleancss-browser.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./static/js/relateurl-browser.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="./static/js/master.js"
+      type="text/javascript"
+    ></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?96d9604e16c1245896d37f6e50c29669";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+      })();
+      </script>
+</body>
+</html>

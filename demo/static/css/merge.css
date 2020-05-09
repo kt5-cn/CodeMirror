@@ -88,6 +88,10 @@
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAGUlEQVQI12M4Kyb2/6yY2H8GBgYGJgYkAABURgPz6Ks7wQAAAABJRU5ErkJggg==);
   background-position: bottom left;
   background-repeat: repeat-x;
+  color: white;
+  padding: 2px;
+  border-radius: 5px;
+  background-color: #cd64cd;
 }
 
 .CodeMirror-merge-r-chunk { background: #ffffe0; }
