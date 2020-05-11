@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>xml 转 json，json 转 xml，xml、json 互转</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="static/css/font-awesome.min.css">
+        <link rel="stylesheet" href="static/css/bootstrap-4-beta.min.css">
+        <link rel="stylesheet" href="static/css/prettify.min.css">
+        <link rel="stylesheet" href="static/css/jquery-confirm.min.css">
+        <link rel="stylesheet" type="text/css" href="static/css/codemirror.css">
+        <link rel="stylesheet" href="static/css/foldgutter.css" />
+
+        <script src="static/js/jquery-3.2.1.min.js"></script>
+        <script src="static/js/codemirror.js"></script>
+        <script src="static/js/closetag.js"></script>
+        <script src="static/js/foldcode.js"></script>
+        <script src="static/js/foldgutter.js"></script>
+        <script src="static/js/brace-fold.js"></script>
+        <script src="static/js/xml-fold.js"></script>
+        <script src="static/js/indent-fold.js"></script>
+        <script src="static/js/javascript.js"></script>
+        <script src="static/js/xml.js"></script>
+        <script src="static/js/bootstrap-3-2.min.js"></script>
+        <!-- <script src="static/js/prettify.min.js"></script> -->
+        <link rel="stylesheet" type="text/css" href="static/css/animate3.5.2.min.css">
+
+        <script src="static/js/parser.min.js"></script>
+        <script src="static/js/jquery-confirm.min.js"></script>
+        <style>
+            .CodeMirror{
+                height: 100%;
+                width: 100%;
+            }
+            .btn {
+              cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+    <body role="document" style="background-color: #2c3e50;">
+
+        <div class="container-fluid">
+            
+            
+            <div class="row" style="height: calc(100vh - 100px);">
+                <div class="col-md-4" >
+                    <span class="float-right" style="color: white"> <span id="lengthxml" style="margin:5px">0</span> bytes</span>
+                    <textarea id="txtXml" name="xml" style="width: 100%; height: 100%" class="form-control" placeholder="Paste XML to parse in JS/JSON"></textarea>
+                </div>
+                <div class="col-md-4" style=" color: white;">
+                        <div style="margin: 5px; padding: 5px;">
+                                <h1 style="color:white;font-size: 16px;" class="text-center"><a href="/fe" style="text-decoration: none;">首页</a> | Xml、Json 互转 Powered By <a href="https://github.com/NaturalIntelligence/fast-xml-parser" rel="nofollow noopener">Fast XML Parser</a></h1>
+                        </div>
+                        <div style="border: 1px dashed grey; margin: 5px; padding: 5px;">
+                            <h2>选项设置</h2>
+                            <p><small>* 注意转换器将不会校验 XML</small></p>
+                            <input type="checkbox" id="attrNodeName"> 组合所有的属性  <br>
+                            <input type="checkbox" id="ignoreAttributes" checked="true"> 忽略属性 <br>
+                            <input type="checkbox" id="ignoreNameSpace"> 删除所有标签和属性名中的 namespace 命名空间字符串 <br>
+                            <input type="checkbox" id="parseNodeValue" checked="true"> 文本节点的值转为 float / integer / boolean 类型<br>
+                            <input type="checkbox" id="ParseAttributeValue"> 属性的值转为 float / integer / boolean 类型<br>
+                            <input type ="checkbox" id="allowBooleanAttributes"> 允许 Boolean 布尔属性 <br>
+                            <input type ="checkbox" id="trimValues" checked="true" > 删除空格<br>
+                            <span class="clearfix">标签名转 CDATA 时作为单独属性 <input type="text" id="cdataTagName" style=" color: black; float:right;" ><br></span>
+                            <span class="clearfix">需支持的言语标签 / 属性<input type="text" id="localeRange" style=" color: black; float:right;" placeholder="如中文：\u4e00-\u9fa5"><br></span>
+                            <div class="text-center" style="margin: 15px">
+                                <button id="toJson" class="btn btn-primary" type="button">转为 JSON >> </button>
+                                <!-- <button id="toNimn" class="btn btn-primary" type="button">转为 Nimn >> </button> -->
+                                <button id="toXml" class="btn btn-primary" type="button"> << 转为 XML</button>
+                            </div>
+                        </div>
+                        <div style="border: 1px dashed grey; margin: 5px; padding: 5px;">
+                            <h2>校验设置</h2>
+                            <input type="checkbox" id="allowBooleanAttributes_v"> 允许 Boolean 布尔属性<br>
+                            <span class="clearfix">需支持的言语标签 / 属性<input type="text" id="localeRange_v" style=" color: black; float:right;" placeholder="如中文：\u4e00-\u9fa5"><br></span>
+                            <div class="text-center" style="margin: 15px">
+                                <button id="validate" class="btn btn-primary" type="button">校验 XML >> </button>
+                            </div>
+                            
+                        </div>
+                        
+                </div>
+                <div class="col-md-4">
+                        <span class="float-right" style="color: white"><span id="lengthoutput" style="margin:5px">0</span> bytes</span>
+                    <textarea id="result" style="width: 100%; height: 100%" class="form-control" placeholder="Output"></textarea>
+                </div>
+            </div>
+        </div>
+        <script src="static/js/nimn-schema-builder.js"></script>
+        
+    <script>
+        var highlightedLine = null;
+        var editor;
+
+        function updateLength(){
+            var xmlData = editor.getValue();
+            $("#lengthxml")[0].innerText = xmlData.replace(/>\s*</g, "><").length;
+        }
+
+        function onChange(){
+            highlightLine();
+            updateLength();
+        }
+        function highlightLine(n) {
+            if (n) {
+                unhighlightLine();
+                highlightedLine = editor.addLineClass(n - 1, 'background', 'alert-danger');
+                editor.setCursor(n);
+            }else{
+                unhighlightLine()
+            }
+        }
+
+        function unhighlightLine() {
+            if (highlightedLine) {
+                editor.removeLineClass(highlightedLine, 'background', 'alert-danger');
+                highlightedLine = null;
+            }
+        }
+
+        $( document ).ready(function() {
+            //var parser = require("parser");
+            editor = CodeMirror.fromTextArea(document.getElementById("txtXml"), {
+                mode: "application/xml",
+                styleActiveLine: true,
+                lineNumbers: true,
+                foldGutter: true,
+                autofocus: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+            });
+
+            resultEditor = CodeMirror.fromTextArea(document.getElementById("result"), {
+                mode: {name: "javascript", json: true},
+                styleActiveLine: true,
+                lineNumbers: true,
+                foldGutter: true,
+                autofocus: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+            });
+
+            // when user types something, remove highlighting from "bad" line
+            editor.on('change', () => onChange());
+            editor.on('drop', () => onChange());
+            
+            /* $('#txtXml').on('input', function(){
+                updateLength();
+            }); */
+
+            $('#toJson').on('click', function() {
+                // $('#result').val('');
+                resultEditor.setValue('');
+                var result = parser.parse(editor.getValue(),buildParsingConfig());
+                updateOutputLength(JSON.stringify(result));
+                // $('#result').val(JSON.stringify(result,null,4));
+                resultEditor.setValue(JSON.stringify(result,null,4));
+            });
+
+            $('#toXml').on('click', function() {
+                editor.setValue('');
+                // var result = buildJ2XParser().parse(JSON.parse( $('#result').val() ));
+                var result = buildJ2XParser().parse(JSON.parse( resultEditor.getValue() ));
+                editor.setValue('<?xml version="1.0"?>\n'+result);
+            });
+
+            $('#toNimn').on('click', function() {
+                $('#result').val('');
+
+                var jsonData = parser.parse(editor.getValue(),buildParsingConfig());
+                var schema = nimnSchemaBuilder.build(jsonData);
+                var result = parser.parseToNimn(editor.getValue(), schema, buildParsingConfig());
+                updateOutputLength(result);
+                $('#result').val(result);
+            });
+
+            $('#validate').on('click', function() {
+                // $('#result').val('');
+                resultEditor.setValue('');
+                var config = {
+                    allowBooleanAttributes: $("#allowBooleanAttributes_v").prop("checked"),
+                    localeRange : $("#localeRange_v").val() === "" ? "a-zA-Z" : $("#cdataTagName").val(),
+                };
+                var val = parser.validate(editor.getValue(), config);
+                if(val === true){
+                    // $('#result').val("Valid XML");
+                    resultEditor.setValue("Valid XML");
+                }else{
+                    if (val.err.line) {
+                        highlightLine(val.err.line);
+                    }
+                    // $('#result').val(JSON.stringify(val,null,4));
+                    resultEditor.setValue(JSON.stringify(result,null,4));
+                }
+            });
+            
+            optionsLogic();
+            $('#ignoreAttributes').on('change', function (){optionsLogic();});
+
+            function buildParsingConfig(){
+                var config = {
+                    attributeNamePrefix : "@_",
+                    attrNodeName: $("#attrNodeName").prop("checked") ? "@" : false,
+                    textNodeName : "#text",
+                    ignoreAttributes : $("#ignoreAttributes").prop("checked"),
+                    ignoreNameSpace : $("#ignoreNameSpace").prop("checked"),
+                    parseNodeValue : $("#parseNodeValue").prop("checked"),
+                    parseAttributeValue : $("#parseAttributeValue").prop("checked"),
+                    allowBooleanAttributes: $("#allowBooleanAttributes").prop("checked"),
+                    trimValues: $('#trimValues').prop("checked"), //Trim string values of tag and attributes
+                    decodeHTMLchar: false,
+                    cdataTagName: $("#cdataTagName").val() === "" ? false : $("#cdataTagName").val(),
+                    cdataPositionChar: "\\c",
+                    localeRange : $("#localeRange_v").val(),
+                    //arrayMode : $("#arrayMode").prop("checked")
+                };
+
+                return config;
+            }
+
+            function buildJ2XParser(){
+                var defaultOptions = {
+                    attributeNamePrefix : "@_",
+                    attrNodeName: $("#attrNodeName").prop("checked") ? "@" : false,
+                    textNodeName : "#text",
+                    ignoreAttributes : $("#ignoreAttributes").prop("checked"),
+                    cdataTagName: $("#cdataTagName").val() === "" ? false : $("#cdataTagName").val(),
+                    cdataPositionChar: "\\c",
+                    format: true,
+                    indentBy: "  ",
+                    supressEmptyNode: false,
+                }
+
+                return new parser.j2xParser(defaultOptions);
+            }
+            
+            function optionsLogic(){
+                var ignoreAttr = $('#ignoreAttributes').prop('checked');
+                if(ignoreAttr){
+                    $('#attrNodeName').prop('checked', !ignoreAttr);
+                    $('#ParseAttributeValue').prop('checked', !ignoreAttr);
+                    $('#allowBooleanAttributes').prop('checked', !ignoreAttr);
+                }
+                $('#attrNodeName').attr('disabled', ignoreAttr);
+                $('#ParseAttributeValue').attr('disabled', ignoreAttr);
+                $('#allowBooleanAttributes').attr('disabled', ignoreAttr);
+
+                return;
+            }
+
+            
+
+            function updateOutputLength(data){
+                $("#lengthoutput")[0].innerText = data.length;
+            }
+
+            editor.setValue(`<?xml version="1.0"?>
+<any_name>
+    <person>
+        <phone>+122233344550</phone>
+        <name>Jack</name>
+        <phone>+122233344551</phone>
+        <age>33</age>
+        <married firstTime="No">Yes</married>
+        <birthday>Wed, 28 Mar 1979 12:13:14 +0300</birthday>
+        <address>
+            <city>New York</city>
+            <street>Park Ave</street>
+            <buildingNo>1</buildingNo>
+            <flatNo>1</flatNo>
+        </address>
+        <address>
+            <city>Boston</city>
+            <street>Centre St</street>
+            <buildingNo>33</buildingNo>
+            <flatNo>24</flatNo>
+        </address>
+    </person>
+    <person>
+        <phone>+122233344553</phone>
+        <name>Boris</name>
+        <phone>+122233344554</phone>
+        <age>34</age>
+        <married firstTime="Yes">Yes</married>
+        <birthday>Mon, 31 Aug 1970 02:03:04 +0300</birthday>
+        <address>
+            <city>Moscow</city>
+            <street>Kahovka</street>
+            <buildingNo>1</buildingNo>
+            <flatNo>2</flatNo>
+        </address>
+        <address>
+            <city>Tula</city>
+            <street>Lenina</street>
+            <buildingNo>3</buildingNo>
+            <flatNo>78</flatNo>
+        </address>
+    </person>
+</any_name>`);
+            updateLength();
+        });
+    </script>
+    <script async defer src="static/js/buttons.js"></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?96d9604e16c1245896d37f6e50c29669";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+    </body>
+</html>
