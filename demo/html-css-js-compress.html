@@ -165,6 +165,11 @@
       .footer p {
         font-style: italic;
       }
+      body {
+        color: #666;
+        background-image: radial-gradient(currentColor .5px, transparent .5px);
+        background-size: calc(13 * .5px) calc(13 * .5px);
+      }
     </style>
   </head>
   <body>
@@ -176,8 +181,6 @@
           <h2 class="alert alert-success" style="font-size: 16px;">
             这是一款可在线压缩HTML、css与JS的工具，可根据用户的不同要求实现个性化的代码压缩功能，还可以同步提供相应的代码压缩结果报告。非常方便实用。
           </h2>
-          <br />
-          <hr />
           <div>
             <div id="outer-wrapper">
               <div class="wrapper">
@@ -187,6 +190,7 @@
                   cols="40"
                   id="input"
                   class="form-control"
+                  placeholder="请输入 / 粘贴需要被压缩的内容..."
                 ></textarea>
                 <div class="minify-button">
                   <button type="button" id="minify-btn" class="btn btn-primary">
