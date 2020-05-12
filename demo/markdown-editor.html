@@ -3,21 +3,21 @@
   <head>
     <title>在线 Markdown 编辑预览</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../demo/static/css/docs.css" />
+    <link rel="stylesheet" href="static/css/docs.css" />
 
-    <link rel="stylesheet" href="../../lib/codemirror.css" />
-    <link rel="stylesheet" href="../../addon/scroll/simplescrollbars.css">
-    <script src="../../lib/codemirror.js"></script>
-    <script src="../../addon/mode/overlay.js"></script>
-    <script src="../xml/xml.js"></script>
-    <script src="../markdown/markdown.js"></script>
-    <script src="gfm.js"></script>
-    <script src="../javascript/javascript.js"></script>
-    <script src="../css/css.js"></script>
-    <script src="../htmlmixed/htmlmixed.js"></script>
-    <script src="../clike/clike.js"></script>
-    <script src="../meta.js"></script>
-    <script src="../../addon/scroll/simplescrollbars.js"></script>
+    <link rel="stylesheet" href="static/css/codemirror.css" />
+    <link rel="stylesheet" href="static/css/simplescrollbars.css">
+    <script src="static/js/codemirror.js"></script>
+    <script src="static/js/overlay.js"></script>
+    <script src="static/js/xml.js"></script>
+    <script src="static/js/markdown.js"></script>
+    <script src="static/js/gfm.js"></script>
+    <script src="static/js/javascript.js"></script>
+    <script src="static/js/css.js"></script>
+    <script src="static/js/htmlmixed.js"></script>
+    <script src="static/js/clike.js"></script>
+    <script src="static/js/meta.js"></script>
+    <script src="static/js/simplescrollbars.js"></script>
     <style>
       .CodeMirror {
         float: left;
@@ -31,6 +31,7 @@
         height: 600px;
         border: 1px solid black;
         border-left: 0px;
+        background-color: #fff;
       }
       .cm-s-default .cm-emoji {
         color: #009688;
@@ -67,6 +68,11 @@
         color: #fff;
         background-color: #3276b1;
         border-color: #285e8e;
+      }
+      article {
+        color: #666;
+        background-image: radial-gradient(currentColor .5px, transparent .5px);
+        background-size: calc(13 * .5px) calc(13 * .5px);
       }
     </style>
   </head>
