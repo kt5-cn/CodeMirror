@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+<title>CodeMirror: YAML mode</title>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="static/css/docs.css" />
+
+<link rel="stylesheet" href="static/css/codemirror.css" />
+<link rel="stylesheet" href="static/css/simplescrollbars.css">
+<script src="../../lib/codemirror.js"></script>
+<script src="static/js/simplescrollbars.js"></script>
+<script src="yaml.js"></script>
+<style>
+      .CodeMirror {
+        float: left;
+        width: 49%;
+        border: 1px solid black;
+        height: 600px;
+      }
+      iframe {
+        width: 49%;
+        float: left;
+        height: 600px;
+        border: 1px solid black;
+        border-left: 0px;
+        background-color: #fff;
+      }
+      .btns {
+        clear: both;
+        padding-top: 10px;
+      }
+      .btns .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: 150px;
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        margin-right: 10px;
+      }
+      .btns .btn:hover {
+        color: #fff;
+        background-color: #3276b1;
+        border-color: #285e8e;
+      }
+      article {
+        color: #666;
+        background-image: radial-gradient(currentColor .5px, transparent .5px);
+        background-size: calc(13 * .5px) calc(13 * .5px);
+      }
+</style>
+</head>
+<body>
+<article>
+<h2>YAML mode</h2>
+<textarea id="yaml-code" name="code">
+--- # Favorite movies
+- Casablanca
+- North by Northwest
+- The Man Who Wasn't There
+--- # Shopping list
+[milk, pumpkin pie, eggs, juice]
+--- # Indented Blocks, common in YAML data files, use indentation and new lines to separate the key: value pairs
+  name: John Smith
+  age: 33
+--- # Inline Blocks, common in YAML data streams, use commas to separate the key: value pairs between braces
+{name: John Smith, age: 33}
+---
+receipt:     Oz-Ware Purchase Invoice
+date:        2007-08-06
+customer:
+    given:   Dorothy
+    family:  Gale
+
+items:
+    - part_no:   A4786
+      descrip:   Water Bucket (Filled)
+      price:     1.47
+      quantity:  4
+
+    - part_no:   E1628
+      descrip:   High Heeled "Ruby" Slippers
+      size:       8
+      price:     100.27
+      quantity:  1
+
+bill-to:  &id001
+    street: |
+            123 Tornado Alley
+            Suite 16
+    city:   East Centerville
+    state:  KS
+
+ship-to:  *id001
+
+specialDelivery:  >
+    Follow the Yellow Brick
+    Road to the Emerald City.
+    Pay no attention to the
+    man behind the curtain.
+...
+</textarea>
+<textarea id="json-code" name="code"></textarea>
+<div class="btns"><button class="btn" id="download-yaml-btn">下载 Yaml 文件</button><button class="btn" id="download-btn">下载 Json 文件</button></div>
+  </article>
+  <script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+  <script>
+    var yamlEditor = CodeMirror.fromTextArea(document.getElementById("yaml-code"), {
+      lineNumbers: true,
+      theme: "default",
+      scrollbarStyle: "simple",
+    });
+    var jaonEditor = CodeMirror.fromTextArea(document.getElementById("json-code"), {
+      lineNumbers: true,
+      theme: "default",
+      scrollbarStyle: "simple",
+    });
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?96d9604e16c1245896d37f6e50c29669";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  </body>
+</html>

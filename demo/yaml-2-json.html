@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+  <head>
+<title>yaml 在线转 json，json 在线转 yaml，yaml、json 在线互转，yml、json 在线互转 | 「A4纸」前端开发博客</title>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="static/css/docs.css" />
+<link rel="stylesheet" href="static/css/foldgutter.css" />
+
+<link rel="stylesheet" href="static/css/codemirror.css" />
+<link rel="stylesheet" href="static/css/simplescrollbars.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/babel-polyfill/7.8.7/polyfill.min.js"></script>
+<script src="static/js/codemirror.js"></script>
+<script src="static/js/foldcode.js"></script>
+<script src="static/js/foldgutter.js"></script>
+<script src="static/js/brace-fold.js"></script>
+<script src="static/js/indent-fold.js"></script>
+<script src="static/js/javascript.js"></script>
+<script src="static/js/simplescrollbars.js"></script>
+<script src="static/js/yaml.js"></script>
+<style>
+      .CodeMirror {
+        float: left;
+        width: 49%;
+        border: 1px solid black;
+        height: 550px;
+      }
+      .btns {
+        clear: both;
+        padding-top: 10px;
+        text-align: center;
+      }
+      .btns .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: 150px;
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        margin-right: 10px;
+      }
+      .btns .btn--highlighted {
+        font-weight: 700;
+        background-color: #ceb95b;
+        border-color: #ceb95b;
+      }
+      .btns .btn:hover {
+        color: #fff;
+        background-color: #3276b1;
+        border-color: #285e8e;
+      }
+      .btns .btn--highlighted:hover {
+        font-weight: 700;
+        background-color: #7c6e2f;
+        border-color: #7c6e2f;
+      }
+      article {
+        color: #666;
+        background-image: radial-gradient(currentColor .5px, transparent .5px);
+        background-size: calc(13 * .5px) calc(13 * .5px);
+      }
+</style>
+</head>
+<body>
+<article>
+<h2><a href="/fe" style="text-decoration: none;">首页</a> | Yaml、Json 互转</h2>
+<textarea id="yaml-code" name="code">
+---
+# Collection Types #############################################################
+################################################################################
+
+# http://yaml.org/type/map.html -----------------------------------------------#
+
+map:
+  # Unordered set of key: value pairs.
+  Block style: !!map
+    Clark : Evans
+    Ingy  : döt Net
+    Oren  : Ben-Kiki
+  Flow style: !!map { Clark: Evans, Ingy: döt Net, Oren: Ben-Kiki }
+
+# http://yaml.org/type/omap.html ----------------------------------------------#
+
+omap:
+  # Explicitly typed ordered map (dictionary).
+  Bestiary: !!omap
+    - aardvark: African pig-like ant eater. Ugly.
+    - anteater: South-American ant eater. Two species.
+    - anaconda: South-American constrictor snake. Scaly.
+    # Etc.
+  # Flow style
+  Numbers: !!omap [ one: 1, two: 2, three : 3 ]
+
+# http://yaml.org/type/pairs.html ---------------------------------------------#
+
+pairs:
+  # Explicitly typed pairs.
+  Block tasks: !!pairs
+    - meeting: with team.
+    - meeting: with boss.
+    - break: lunch.
+    - meeting: with client.
+  Flow tasks: !!pairs [ meeting: with team, meeting: with boss ]
+
+# http://yaml.org/type/set.html -----------------------------------------------#
+
+set:
+  # Explicitly typed set.
+  baseball players: !!set
+    ? Mark McGwire
+    ? Sammy Sosa
+    ? Ken Griffey
+  # Flow style
+  baseball teams: !!set { Boston Red Sox, Detroit Tigers, New York Yankees }
+
+# http://yaml.org/type/seq.html -----------------------------------------------#
+
+seq:
+  # Ordered sequence of nodes
+  Block style: !!seq
+  - Mercury   # Rotates - no light/dark sides.
+  - Venus     # Deadliest. Aptly named.
+  - Earth     # Mostly dirt.
+  - Mars      # Seems empty.
+  - Jupiter   # The king.
+  - Saturn    # Pretty.
+  - Uranus    # Where the sun hardly shines.
+  - Neptune   # Boring. No rings.
+  - Pluto     # You call this a planet?
+  Flow style: !!seq [ Mercury, Venus, Earth, Mars,      # Rocks
+                      Jupiter, Saturn, Uranus, Neptune, # Gas
+                      Pluto ]                           # Overrated
+
+
+# Scalar Types #################################################################
+################################################################################
+
+# http://yaml.org/type/bool.html ----------------------------------------------#
+
+bool:
+  - true
+  - True
+  - TRUE
+  - false
+  - False
+  - FALSE
+
+# http://yaml.org/type/float.html ---------------------------------------------#
+
+float:
+  canonical: 6.8523015e+5
+  exponentioal: 685.230_15e+03
+  fixed: 685_230.15
+  sexagesimal: 190:20:30.15
+  negative infinity: -.inf
+  not a number: .NaN
+
+# http://yaml.org/type/int.html -----------------------------------------------#
+
+int:
+  canonical: 685230
+  decimal: +685_230
+  octal: 02472256
+  hexadecimal: 0x_0A_74_AE
+  binary: 0b1010_0111_0100_1010_1110
+  sexagesimal: 190:20:30
+
+# http://yaml.org/type/merge.html ---------------------------------------------#
+
+merge:
+  - &CENTER { x: 1, y: 2 }
+  - &LEFT { x: 0, y: 2 }
+  - &BIG { r: 10 }
+  - &SMALL { r: 1 }
+  
+  # All the following maps are equal:
+  
+  - # Explicit keys
+    x: 1
+    y: 2
+    r: 10
+    label: nothing
+  
+  - # Merge one map
+    << : *CENTER
+    r: 10
+    label: center
+  
+  - # Merge multiple maps
+    << : [ *CENTER, *BIG ]
+    label: center/big
+  
+  - # Override
+    << : [ *BIG, *LEFT, *SMALL ]
+    x: 1
+    label: big/left/small
+
+# http://yaml.org/type/null.html ----------------------------------------------#
+
+null:
+  # This mapping has four keys,
+  # one has a value.
+  empty:
+  canonical: ~
+  english: null
+  ~: null key
+  # This sequence has five
+  # entries, two have values.
+  sparse:
+    - ~
+    - 2nd entry
+    -
+    - 4th entry
+    - Null
+
+# http://yaml.org/type/str.html -----------------------------------------------#
+
+string: abcd
+
+# http://yaml.org/type/timestamp.html -----------------------------------------#
+
+timestamp:
+  canonical:        2001-12-15T02:59:43.1Z
+  valid iso8601:    2001-12-14t21:59:43.10-05:00
+  space separated:  2001-12-14 21:59:43.10 -5
+  no time zone (Z): 2001-12-15 2:59:43.10
+  date (00:00:00Z): 2002-12-14
+
+
+# JavaScript Specific Types ####################################################
+################################################################################
+
+# https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/RegExp
+
+regexp:
+  simple: !!js/regexp      foobar
+  modifiers: !!js/regexp   /foobar/mi
+
+# https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/undefined
+
+undefined: !!js/undefined ~
+
+# https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function
+
+function: !!js/function >
+  function foobar() {
+    return 'Wow! JS-YAML Rocks!';
+  }
+
+
+# Custom types #################################################################
+################################################################################
+
+
+# JS-YAML allows you to specify a custom YAML types for your structures.
+# This is a simple example of custom constructor defined in `js/demo.js` for
+# custom `!sexy` type:
+#
+# var SexyYamlType = new jsyaml.Type('!sexy', {
+#   kind: 'sequence',
+#   construct: function (data) {
+#     return data.map(function (string) { return 'sexy ' + string; });
+#   }
+# });
+#
+# var SEXY_SCHEMA = jsyaml.Schema.create([ SexyYamlType ]);
+#
+# result = jsyaml.load(yourData, { schema: SEXY_SCHEMA });
+
+foobar: !sexy
+  - bunny
+  - chocolate
+
+</textarea>
+<textarea id="json-code" name="code"></textarea>
+<div class="btns"><button class="btn btn--highlighted" id="yaml-json-btn">Yaml => Json</button><button class="btn" id="download-yaml-btn">下载 Yaml 文件</button><button class="btn" id="download-json-btn">下载 Json 文件</button><button class="btn btn--highlighted" id="json-yaml-btn">Yaml <= Json</button></div>
+  </article>
+  <script src="https://cdn.bootcdn.net/ajax/libs/esprima/2.7.3/esprima.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/js-yaml/3.13.1/js-yaml.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+  <script>
+    var yamlEditor = CodeMirror.fromTextArea(document.getElementById("yaml-code"), {
+      mode: 'text/x-yaml',
+      lineNumbers: true,
+      theme: "default",
+      scrollbarStyle: "simple",
+      foldGutter: true,
+      gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+    });
+    var jsonEditor = CodeMirror.fromTextArea(document.getElementById("json-code"), {
+      mode: {name: "javascript", json: true},
+      theme: "default",
+      scrollbarStyle: "simple",
+      lineNumbers: true,
+      foldGutter: true,
+      gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+    });
+
+    var SexyYamlType = new jsyaml.Type('!sexy', {
+      kind: 'sequence', // See node kinds in YAML spec: http://www.yaml.org/spec/1.2/spec.html#kind//
+      construct: function (data) {
+        return data.map(function (string) { return 'sexy ' + string; });
+      }
+    });
+    var SEXY_SCHEMA = jsyaml.Schema.create([ SexyYamlType ]);
+    var $y2jBtn = document.getElementById('yaml-json-btn');
+
+    jsonEditor.setValue(JSON.stringify(jsyaml.load(yamlEditor.getValue(), { schema: SEXY_SCHEMA }), null, 2));
+
+    $y2jBtn.onclick = function () {
+      jsonEditor.setValue(JSON.stringify(jsyaml.load(yamlEditor.getValue(), { schema: SEXY_SCHEMA }), null, 2));
+    }
+    var $j2yBtn = document.getElementById('json-yaml-btn');
+    $j2yBtn.onclick = function () {
+      yamlEditor.setValue(jsyaml.dump(JSON.parse(jsonEditor.getValue())));
+    }
+
+    var $dyBtn = document.getElementById('download-yaml-btn');
+    $dyBtn.onclick = function () {
+      var blob = new Blob([yamlEditor.getValue()], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, new Date().valueOf() + ".yml");
+    }
+
+    var $djBtn = document.getElementById('download-json-btn');
+    $djBtn.onclick = function () {
+      var blob = new Blob([jsonEditor.getValue()], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, new Date().valueOf() + ".json");
+    }
+  </script>
+  <script> 
+    ;var encode_version = 'sojson.v5', iupsu = '__0x81aec',  __0x81aec=['w6PDqsOIDHQGbMOICA==','5YqY6Zqn54mE5py55YyN772ULsON5L6A5ayH5p2S5b6Y56iI','w4fDhsOoGXo=','WcO0wqPCnE8=','w7nDncOtwp8n','w4DCncKVwpTDig==','acOQwrl8w64=','GW3DiDXDuxV2','wp4rwozCgsOZEQ==','Z8KwEMOj','MMKwYcOsDsOvwpHCsMKBaMKDPD/CjcO9d2oaw7TDqjo=','OsKRDg=='];(function(_0x3ce31f,_0x144101){var _0x372f82=function(_0x342401){while(--_0x342401){_0x3ce31f['push'](_0x3ce31f['shift']());}};_0x372f82(++_0x144101);}(__0x81aec,0xbb));var _0xc516=function(_0x23bcf0,_0x334e47){_0x23bcf0=_0x23bcf0-0x0;var _0x66bca5=__0x81aec[_0x23bcf0];if(_0xc516['initialized']===undefined){(function(){var _0x457e39=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4bbb67='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x457e39['atob']||(_0x457e39['atob']=function(_0x23aed5){var _0x38b9eb=String(_0x23aed5)['replace'](/=+$/,'');for(var _0x5f58c8=0x0,_0x128173,_0x56bc83,_0x15d28d=0x0,_0x61e269='';_0x56bc83=_0x38b9eb['charAt'](_0x15d28d++);~_0x56bc83&&(_0x128173=_0x5f58c8%0x4?_0x128173*0x40+_0x56bc83:_0x56bc83,_0x5f58c8++%0x4)?_0x61e269+=String['fromCharCode'](0xff&_0x128173>>(-0x2*_0x5f58c8&0x6)):0x0){_0x56bc83=_0x4bbb67['indexOf'](_0x56bc83);}return _0x61e269;});}());var _0x23562c=function(_0x1d9b6c,_0x18c718){var _0x57441b=[],_0x1448f8=0x0,_0x28ad10,_0x566204='',_0x4660c0='';_0x1d9b6c=atob(_0x1d9b6c);for(var _0x53e437=0x0,_0x209976=_0x1d9b6c['length'];_0x53e437<_0x209976;_0x53e437++){_0x4660c0+='%'+('00'+_0x1d9b6c['charCodeAt'](_0x53e437)['toString'](0x10))['slice'](-0x2);}_0x1d9b6c=decodeURIComponent(_0x4660c0);for(var _0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x57441b[_0x5067d9]=_0x5067d9;}for(_0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9]+_0x18c718['charCodeAt'](_0x5067d9%_0x18c718['length']))%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;}_0x5067d9=0x0;_0x1448f8=0x0;for(var _0x20f442=0x0;_0x20f442<_0x1d9b6c['length'];_0x20f442++){_0x5067d9=(_0x5067d9+0x1)%0x100;_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9])%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;_0x566204+=String['fromCharCode'](_0x1d9b6c['charCodeAt'](_0x20f442)^_0x57441b[(_0x57441b[_0x5067d9]+_0x57441b[_0x1448f8])%0x100]);}return _0x566204;};_0xc516['rc4']=_0x23562c;_0xc516['data']={};_0xc516['initialized']=!![];}var _0x589ce9=_0xc516['data'][_0x23bcf0];if(_0x589ce9===undefined){if(_0xc516['once']===undefined){_0xc516['once']=!![];}_0x66bca5=_0xc516['rc4'](_0x66bca5,_0x334e47);_0xc516['data'][_0x23bcf0]=_0x66bca5;}else{_0x66bca5=_0x589ce9;}return _0x66bca5;};;location['href'][_0xc516('0x0','3wEU')](_0xc516('0x1','n!Oy'))<0x0&&(location[_0xc516('0x2','$%hp')]=_0xc516('0x3','dAx3'));;(function(_0x16f569,_0x23dbf6,_0x2de187){var _0x1c6d43={'wXVHe':_0xc516('0x4','5cRX'),'QBDph':function _0x1badbc(_0x14e03d,_0x45ce42){return _0x14e03d!==_0x45ce42;},'pOLHg':_0xc516('0x5','Q@4('),'VKGIG':function _0x206a52(_0xeffa44,_0x1db721){return _0xeffa44===_0x1db721;},'fXGud':'sojson.v5','YYKHh':function _0x269e49(_0x2ca3e1,_0x12d6df){return _0x2ca3e1+_0x12d6df;},'SwcGS':_0xc516('0x6','F8%o')};_0x2de187='al';try{_0x2de187+=_0x1c6d43['wXVHe'];_0x23dbf6=encode_version;if(!(_0x1c6d43[_0xc516('0x7','Q@4(')](typeof _0x23dbf6,_0x1c6d43[_0xc516('0x8','0eVt')])&&_0x1c6d43[_0xc516('0x9','6Y2k')](_0x23dbf6,_0x1c6d43[_0xc516('0xa','B$W$')]))){_0x16f569[_0x2de187](_0x1c6d43[_0xc516('0xb','YNNi')]('删除','版本号，js会定期弹窗，还请支持我们的工作'));}}catch(_0x15dcb6){_0x16f569[_0x2de187](_0x1c6d43['SwcGS']);}}(window));;encode_version = 'sojson.v5';
+</script>
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?96d9604e16c1245896d37f6e50c29669";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  </body>
+</html>
