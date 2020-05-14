@@ -36,6 +36,10 @@
       .operateTB {
         margin-top: 20px;
       }
+      .ne-red {
+        background-color: #88ff88;
+        border-radius: 5px;
+      }
     </style>
   </head>
 
@@ -402,6 +406,7 @@
                     </div>
                     <div class="bottomBar">
                       <div class="title">匹配结果：</div>
+                      <div class="result-colored" id="result-colored"></div>
                       <textarea
                         readonly="readonly"
                         id="textMatchResult"
@@ -488,15 +493,23 @@
         return new RegExp(document.getElementById("textPattern2").value, op);
       }
       function onMatch() {
+        $('#result-colored').html('');
         if (!isValidFields()) return false;
         document.getElementById("textMatchResult").value = "";
         var regex = buildRegex();
-        var result = editor.getValue().match(regex);
+        var eVal = editor.getValue();
+        var result = eVal.match(regex);
+        // console.log(eVal.replace(regex, function(str) {
+        //   return '<font class="ne-red">' + str + '</font>';
+        // }));
         if (null == result || 0 == result.length) {
           document.getElementById("textMatchResult").value = "（没有匹配）";
           $('#textMatchResult').css('border', '2px solid #ff7575');
           return false;
         }
+        $('#result-colored').html('<pre>' + eVal.replace(regex, function(str) {
+          return '<font class="ne-red">' + str + '</font>';
+        }) + '</pre>');
         if (document.getElementById("optionGlobal").checked) {
           var strResult = "共找到 " + result.length + " 处匹配：\r\n";
           for (var i = 0; i < result.length; ++i)
@@ -510,15 +523,21 @@
         return true;
       }
       function onMatch2() {
+        $('#result-colored').html('');
         if (!isValidFields2()) return false;
         document.getElementById("textMatchResult").value = "";
         var regex = buildRegex2();
-        var result = regex.test(editor.getValue());
+        var eVal = editor.getValue();
+        var result = eVal.match(regex);
+        // var result = regex.test(editor.getValue());
         if (!result) {
           document.getElementById("textMatchResult").value = "匹配失败！！！！！！";
           $('#textMatchResult').css('border', '2px solid #ff7575');
           return false;
         } else {
+          $('#result-colored').html('<pre>' + eVal.replace(regex, function(str) {
+            return '<font class="ne-red">' + str + '</font>';
+          }) + '</pre>');
           document.getElementById("textMatchResult").value = '匹配成功！！！！！！';
           $('#textMatchResult').css('border', '2px solid #88ff88');
         }
