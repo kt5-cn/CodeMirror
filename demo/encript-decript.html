@@ -239,41 +239,129 @@
                             type="text"
                             style="width: 200px;"
                             class="form-control"
-                            id="aes-key"
+                            id="aes-key"
                             placeholder="请输入用于 AES 加密的密钥"
                           />
                           <input
                             type="text"
                             style="width: 220px;"
                             class="form-control"
-                            id="aes-iv"
+                            id="aes-iv"
                             placeholder="请输入用于 AES 加密的 IV（可选）"
                           />
                           <span class="input-group-addon">Modes 模式</span>
-                          <div class="input-group-btn" role="group" aria-label="...">
-                            <button  id="aes-modes-btn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span id="aes-modes--current" data-val="CBC">CBC（默认）</span><span class="caret"></span>
+                          <div
+                            class="input-group-btn"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <button
+                              id="aes-modes-btn"
+                              type="button"
+                              class="btn btn-default dropdown-toggle"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <span id="aes-modes--current" data-val="CBC"
+                                >CBC（默认）</span
+                              ><span class="caret"></span>
                             </button>
-                             <ul class="dropdown-menu" >
-                               <li><a href="javascript:;" onclick="changeAesModes('CBC',this)">CBC（默认）</a></li>
-                               <li><a href="javascript:;" onclick="changeAesModes('CFB',this)">CFB</a></li>
-                               <li><a href="javascript:;" onclick="changeAesModes('CTR',this)">CTR</a></li>
-                               <li><a href="javascript:;" onclick="changeAesModes('OFB',this)">OFB</a></li>
-                               <li><a href="javascript:;" onclick="changeAesModes('ECB',this)">ECB</a></li>
-                             </ul>                           
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesModes('CBC',this)"
+                                  >CBC（默认）</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesModes('CFB',this)"
+                                  >CFB</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesModes('CTR',this)"
+                                  >CTR</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesModes('OFB',this)"
+                                  >OFB</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesModes('ECB',this)"
+                                  >ECB</a
+                                >
+                              </li>
+                            </ul>
                           </div>
-                          <span class="input-group-addon">Padding 填充方案</span>
-                          <div class="input-group-btn" role="group" aria-label="...">
-                            <button  id="aes-padding-btn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span id="aes-padding--current" data-val="Pkcs7">Pkcs7（默认）</span><span class="caret"></span>
+                          <span class="input-group-addon"
+                            >Padding 填充方案</span
+                          >
+                          <div
+                            class="input-group-btn"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <button
+                              id="aes-padding-btn"
+                              type="button"
+                              class="btn btn-default dropdown-toggle"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <span id="aes-padding--current" data-val="Pkcs7"
+                                >Pkcs7（默认）</span
+                              ><span class="caret"></span>
                             </button>
-                             <ul class="dropdown-menu" >
-                               <li><a href="javascript:;" onclick="changeAesPadding('Pkcs7',this)">Pkcs7（默认）</a></li>
-                               <li><a href="javascript:;" onclick="changeAesPadding('Iso97971',this)">Iso97971</a></li>
-                               <li><a href="javascript:;" onclick="changeAesPadding('AnsiX923',this)">AnsiX923</a></li>
-                               <li><a href="javascript:;" onclick="changeAesPadding('ZeroPadding',this)">ZeroPadding</a></li>
-                               <li><a href="javascript:;" onclick="changeAesPadding('NoPadding',this)">NoPadding</a></li>
-                             </ul>                           
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesPadding('Pkcs7',this)"
+                                  >Pkcs7（默认）</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesPadding('Iso97971',this)"
+                                  >Iso97971</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesPadding('AnsiX923',this)"
+                                  >AnsiX923</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesPadding('ZeroPadding',this)"
+                                  >ZeroPadding</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesPadding('NoPadding',this)"
+                                  >NoPadding</a
+                                >
+                              </li>
+                            </ul>
                           </div>
                           <div
                             class="input-group-btn"
@@ -359,16 +447,16 @@
         }
       );
       function base64Encode() {
-        $("#result-area").val(Base64.encode(editor.getValue()));
+        $("#result-area").val("").val(Base64.encode(editor.getValue()));
       }
       function base64Decode() {
-        $("#result-area").val(Base64.decode(editor.getValue()));
+        $("#result-area").val("").val(Base64.decode(editor.getValue()));
       }
       function exchange() {
         var i = editor.getValue(),
           o = $("#result-area").val();
         editor.setValue(o);
-        $("#result-area").val(i);
+        $("#result-area").val("").val(i);
       }
       function emptyResult() {
         $("#result-area").val("");
@@ -378,16 +466,16 @@
         $("#result-area").val("");
       }
       function urlEncodeURI() {
-        $("#result-area").val(encodeURI(editor.getValue()));
+        $("#result-area").val("").val(encodeURI(editor.getValue()));
       }
       function urlDecodeURI() {
-        $("#result-area").val(decodeURI(editor.getValue()));
+        $("#result-area").val("").val(decodeURI(editor.getValue()));
       }
       function urlEncodeURIComponent() {
-        $("#result-area").val(encodeURIComponent(editor.getValue()));
+        $("#result-area").val("").val(encodeURIComponent(editor.getValue()));
       }
       function urlDecodeURIComponent() {
-        $("#result-area").val(decodeURIComponent(editor.getValue()));
+        $("#result-area").val("").val(decodeURIComponent(editor.getValue()));
       }
       function unicodeEncode() {
         var str = editor.getValue();
@@ -395,14 +483,14 @@
         for (var i = 0; i < str.length; i++) {
           res[i] = ("00" + str.charCodeAt(i).toString(16)).slice(-4);
         }
-        $("#result-area").val("\\u" + res.join("\\u"));
+        $("#result-area").val("").val("\\u" + res.join("\\u"));
       }
       function unicodeDecode() {
-        $("#result-area").val(unescape(editor.getValue().replace(/\\/g, "%")));
+        $("#result-area").val("").val(unescape(editor.getValue().replace(/\\/g, "%")));
       }
       function unicodeEncodeCN() {
         var str = editor.getValue();
-        $("#result-area").val(
+        $("#result-area").val("").val(
           str.replace(/([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/g, function (newStr) {
             return "\\u" + newStr.charCodeAt(0).toString(16);
           })
@@ -410,17 +498,67 @@
       }
       function unicodeDecodeCN() {
         var str = editor.getValue();
-        $("#result-area").val(
+        $("#result-area").val("").val(
           unescape(str.replace(/\\/g, "%")).replace(/%/g, "\\")
         );
       }
       function md5Encode() {
         var str = editor.getValue();
         var key = $.trim($("#md5-key").val());
-        $("#result-area").val(key ? md5(str, key) : md5(str));
+        $("#result-area").val("").val(key ? md5(str, key) : md5(str));
       }
       function md5Decode() {
         // window.location.href = "https://www.somd5.com/";
+      }
+      function changeAesModes(val, obj) {
+        $("#aes-modes--current").text($(obj).text()).attr("data-val", val);
+      }
+      function changeAesPadding(val, obj) {
+        $("#aes-padding--current").text($(obj).text()).attr("data-val", val);
+      }
+      function aesEncode() {
+        var iv = $.trim($("#aes-iv").val());
+        var params = iv
+          ? {
+              iv: CryptoJS.enc.Hex.parse(iv),
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            }
+          : {
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            };
+        var key = iv
+          ? CryptoJS.enc.Hex.parse($("#aes-key").val())
+          : $("#aes-key").val();
+        $("#result-area").val("").val(
+          CryptoJS.AES.encrypt(editor.getValue(), key, params).toString()
+        );
+      }
+      function aesDecode() {
+        var iv = $.trim($("#aes-iv").val());
+        var params = iv
+          ? {
+              iv: CryptoJS.enc.Hex.parse(iv),
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            }
+          : {
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            };
+        var key = iv
+          ? CryptoJS.enc.Hex.parse($("#aes-key").val())
+          : $("#aes-key").val();
+        $("#result-area").val("").val(
+          CryptoJS.AES.decrypt(editor.getValue(), key, params).toString(
+            CryptoJS.enc.Utf8
+          )
+        );
       }
     </script>
     <script>
