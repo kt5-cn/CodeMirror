@@ -206,7 +206,7 @@
                             style="width: 300px;"
                             class="form-control"
                             id="md5-key"
-                            placeholder="请输入用于 md5 加密的 key（可选）"
+                            placeholder="请输入用于 HMAC-MD5 加密的 key（可选）"
                           />
                           <div
                             class="input-group-btn"
@@ -229,6 +229,71 @@
                             >
                               MD5 解密
                             </a>
+                          </div>
+                        </div>
+                      </form>
+                      <form class="well form-inline">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-addon">AES 加密 / 解密</span>
+                          <input
+                            type="text"
+                            style="width: 200px;"
+                            class="form-control"
+                            id="aes-key"
+                            placeholder="请输入用于 AES 加密的密钥"
+                          />
+                          <input
+                            type="text"
+                            style="width: 220px;"
+                            class="form-control"
+                            id="aes-iv"
+                            placeholder="请输入用于 AES 加密的 IV（可选）"
+                          />
+                          <span class="input-group-addon">模式（Block Modes）</span>
+                          <div class="input-group-btn" role="group" aria-label="...">
+                            <button  id="aes-modes-btn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span id="aes-modes--current" data-val="CBC">CBC（默认）</span><span class="caret"></span>
+                            </button>
+                             <ul class="dropdown-menu" >
+                               <li><a href="javascript:;" onclick="changeAesModes('CBC',this)">CBC（默认）</a></li>
+                               <li><a href="javascript:;" onclick="changeAesModes('CFB',this)">CFB</a></li>
+                               <li><a href="javascript:;" onclick="changeAesModes('CTR',this)">CTR</a></li>
+                               <li><a href="javascript:;" onclick="changeAesModes('OFB',this)">OFB</a></li>
+                               <li><a href="javascript:;" onclick="changeAesModes('ECB',this)">ECB</a></li>
+                             </ul>                           
+                          </div>
+                          <span class="input-group-addon">填充方案（Padding Schemes）</span>
+                          <div class="input-group-btn" role="group" aria-label="...">
+                            <button  id="aes-padding-btn" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span id="aes-padding--current" data-val="Pkcs7">Pkcs7（默认）</span><span class="caret"></span>
+                            </button>
+                             <ul class="dropdown-menu" >
+                               <li><a href="javascript:;" onclick="changeAesPadding('Pkcs7',this)">Pkcs7（默认）</a></li>
+                               <li><a href="javascript:;" onclick="changeAesPadding('Iso97971',this)">Iso97971</a></li>
+                               <li><a href="javascript:;" onclick="changeAesPadding('AnsiX923',this)">AnsiX923</a></li>
+                               <li><a href="javascript:;" onclick="changeAesPadding('ZeroPadding',this)">ZeroPadding</a></li>
+                               <li><a href="javascript:;" onclick="changeAesPadding('NoPadding',this)">NoPadding</a></li>
+                             </ul>                           
+                          </div>
+                          <div
+                            class="input-group-btn"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              onclick="aesEncode();"
+                            >
+                              AES 加密
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-success"
+                              onclick="aesDecode();"
+                            >
+                              AES 解密
+                            </button>
                           </div>
                         </div>
                       </form>
@@ -284,6 +349,7 @@
     <script src="static/js/layer2.js"></script>
     <script src="static/js/base64.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.15.0/js/md5.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
     <script language="javascript">
       var editor = CodeMirror.fromTextArea(
         document.getElementById("input-area"),
