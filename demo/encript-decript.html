@@ -51,6 +51,9 @@
       .title {
         padding: 10px 0;
       }
+      .radio-inline {
+        font-size: 14px;
+      }
     </style>
   </head>
 
@@ -384,6 +387,97 @@
                             </button>
                           </div>
                         </div>
+                        <div
+                          class="input-group input-group-sm"
+                          style="margin-top: 5px;"
+                        >
+                          <span class="input-group-addon">CryptoJS 其他方式</span>
+                          <div
+                            class="input-group-btn"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <label class="radio-inline">
+                              <input
+                                type="radio"
+                                name="allRadioOptions"
+                                id="des"
+                                value="des"
+                              />
+                              DES
+                            </label>
+                            <label class="radio-inline">
+                              <input
+                                type="radio"
+                                name="allRadioOptions"
+                                id="triple-des"
+                                value="triple-des"
+                              />
+                              Triple DES
+                            </label>
+                            <label class="radio-inline">
+                              <input
+                                type="radio"
+                                name="allRadioOptions"
+                                id="rabbit"
+                                value="rabbit"
+                              />
+                              Rabbit
+                            </label>
+                            <label class="radio-inline">
+                              <input
+                                type="radio"
+                                name="allRadioOptions"
+                                id="rc4"
+                                value="rc4"
+                              />
+                              RC4
+                            </label>
+                            <label class="radio-inline">
+                              <input
+                                type="radio"
+                                name="allRadioOptions"
+                                id="rc4-drop"
+                                value="rc4-drop"
+                              />
+                              RC4Drop
+                            </label>
+                          </div>
+                          <input
+                            type="text"
+                            style="width: 215px;"
+                            class="form-control"
+                            id="drop"
+                            placeholder="drop 字节数，默认 768 (192 words)"
+                          />
+                          <input
+                            type="text"
+                            style="width: 230px;"
+                            class="form-control"
+                            id="all-key"
+                            placeholder="请输入用于加密的密钥"
+                          />
+                          <div
+                            class="input-group-btn"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              onclick="allEncode();"
+                            >
+                              加密
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-success"
+                              onclick="allDecode();"
+                            >
+                              解密
+                            </button>
+                          </div>
+                        </div>
                       </form>
                       <form class="well form-inline">
                         <div
@@ -483,29 +577,39 @@
         for (var i = 0; i < str.length; i++) {
           res[i] = ("00" + str.charCodeAt(i).toString(16)).slice(-4);
         }
-        $("#result-area").val("").val("\\u" + res.join("\\u"));
+        $("#result-area")
+          .val("")
+          .val("\\u" + res.join("\\u"));
       }
       function unicodeDecode() {
-        $("#result-area").val("").val(unescape(editor.getValue().replace(/\\/g, "%")));
+        $("#result-area")
+          .val("")
+          .val(unescape(editor.getValue().replace(/\\/g, "%")));
       }
       function unicodeEncodeCN() {
         var str = editor.getValue();
-        $("#result-area").val("").val(
-          str.replace(/([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/g, function (newStr) {
-            return "\\u" + newStr.charCodeAt(0).toString(16);
-          })
-        );
+        $("#result-area")
+          .val("")
+          .val(
+            str.replace(/([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/g, function (
+              newStr
+            ) {
+              return "\\u" + newStr.charCodeAt(0).toString(16);
+            })
+          );
       }
       function unicodeDecodeCN() {
         var str = editor.getValue();
-        $("#result-area").val("").val(
-          unescape(str.replace(/\\/g, "%")).replace(/%/g, "\\")
-        );
+        $("#result-area")
+          .val("")
+          .val(unescape(str.replace(/\\/g, "%")).replace(/%/g, "\\"));
       }
       function md5Encode() {
         var str = editor.getValue();
         var key = $.trim($("#md5-key").val());
-        $("#result-area").val("").val(key ? md5(str, key) : md5(str));
+        $("#result-area")
+          .val("")
+          .val(key ? md5(str, key) : md5(str));
       }
       function md5Decode() {
         // window.location.href = "https://www.somd5.com/";
@@ -533,9 +637,9 @@
         var key = iv
           ? CryptoJS.enc.Hex.parse($("#aes-key").val())
           : $("#aes-key").val();
-        $("#result-area").val("").val(
-          CryptoJS.AES.encrypt(editor.getValue(), key, params).toString()
-        );
+        $("#result-area")
+          .val("")
+          .val(CryptoJS.AES.encrypt(editor.getValue(), key, params).toString());
       }
       function aesDecode() {
         var iv = $.trim($("#aes-iv").val());
@@ -554,11 +658,13 @@
         var key = iv
           ? CryptoJS.enc.Hex.parse($("#aes-key").val())
           : $("#aes-key").val();
-        $("#result-area").val("").val(
-          CryptoJS.AES.decrypt(editor.getValue(), key, params).toString(
-            CryptoJS.enc.Utf8
-          )
-        );
+        $("#result-area")
+          .val("")
+          .val(
+            CryptoJS.AES.decrypt(editor.getValue(), key, params).toString(
+              CryptoJS.enc.Utf8
+            )
+          );
       }
     </script>
     <script>
