@@ -723,9 +723,254 @@
     <script src="static/js/xmorse.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.15.0/js/md5.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-    <script language="javascript">function base64Encode(){$("#result-area").val("").val(Base64.encode(editor.getValue()))}function base64Decode(){$("#result-area").val("").val(Base64.decode(editor.getValue()))}function exchange(){var e=editor.getValue(),a=$("#result-area").val();editor.setValue(a),$("#result-area").val("").val(e)}function emptyResult(){$("#result-area").val("")}function emptyAll(){editor.setValue(""),$("#result-area").val("")}function urlEncodeURI(){$("#result-area").val("").val(encodeURI(editor.getValue()))}function urlDecodeURI(){$("#result-area").val("").val(decodeURI(editor.getValue()))}function urlEncodeURIComponent(){$("#result-area").val("").val(encodeURIComponent(editor.getValue()))}function urlDecodeURIComponent(){$("#result-area").val("").val(decodeURIComponent(editor.getValue()))}function unicodeEncode(){for(var e=editor.getValue(),a=[],t=0;t<e.length;t++)a[t]=("00"+e.charCodeAt(t).toString(16)).slice(-4);$("#result-area").val("").val("\\u"+a.join("\\u"))}function unicodeDecode(){$("#result-area").val("").val(unescape(editor.getValue().replace(/\\/g,"%")))}function unicodeEncodeCN(){var e=editor.getValue();$("#result-area").val("").val(e.replace(/([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/g,function(e){return"\\u"+e.charCodeAt(0).toString(16)}))}function unicodeDecodeCN(){var e=editor.getValue();$("#result-area").val("").val(unescape(e.replace(/\\/g,"%")).replace(/%/g,"\\"))}function md5Encode(){var e=editor.getValue(),a=$.trim($("#md5-key").val());$("#result-area").val("").val(a?md5(e,a):md5(e))}function md5Decode(){}function changeAesModes(e,a){$("#aes-modes--current").text($(a).text()).attr("data-val",e)}function changeAesPadding(e,a){$("#aes-padding--current").text($(a).text()).attr("data-val",e)}function aesEncode(){var e=$.trim($("#aes-iv").val()),a=e?{iv:CryptoJS.enc.Hex.parse(e),mode:CryptoJS.mode[$("#aes-modes--current").attr("data-val")],padding:CryptoJS.pad[$("#aes-padding--current").attr("data-val")]}:{mode:CryptoJS.mode[$("#aes-modes--current").attr("data-val")],padding:CryptoJS.pad[$("#aes-padding--current").attr("data-val")]},t=e?CryptoJS.enc.Hex.parse($("#aes-key").val()):$("#aes-key").val();$("#result-area").val("").val(CryptoJS.AES.encrypt(editor.getValue(),t,a).toString())}function aesDecode(){var e=$.trim($("#aes-iv").val()),a=e?{iv:CryptoJS.enc.Hex.parse(e),mode:CryptoJS.mode[$("#aes-modes--current").attr("data-val")],padding:CryptoJS.pad[$("#aes-padding--current").attr("data-val")]}:{mode:CryptoJS.mode[$("#aes-modes--current").attr("data-val")],padding:CryptoJS.pad[$("#aes-padding--current").attr("data-val")]},t=e?CryptoJS.enc.Hex.parse($("#aes-key").val()):$("#aes-key").val();$("#result-area").val("").val(CryptoJS.AES.decrypt(editor.getValue(),t,a).toString(CryptoJS.enc.Utf8))}function cryptoJsEncode(){var e=$("input[name='cryptoJsRadioOptions']:checked").val(),a=$("#crypto-js-key").val();if(!a)return alert("请先输入用于加密的密钥"),!1;if("RC4Drop"!==e)$("#result-area").val("").val(CryptoJS[e].encrypt(editor.getValue(),a).toString());else{var t=parseInt($("#drop").val()||768);$("#result-area").val("").val(CryptoJS[e].encrypt(editor.getValue(),a,{drop:t}).toString())}}function cryptoJsDecode(){var e=$("input[name='cryptoJsRadioOptions']:checked").val(),a=$("#crypto-js-key").val();if(!a)return alert("请先输入用于加密的密钥"),!1;if("RC4Drop"!==e)$("#result-area").val("").val(CryptoJS[e].decrypt(editor.getValue(),a).toString(CryptoJS.enc.Utf8));else{var t=parseInt($("#drop").val()||768);$("#result-area").val("").val(CryptoJS[e].decrypt(editor.getValue(),a,{drop:t}).toString(CryptoJS.enc.Utf8))}}function changeSha3Opl(e,a){$("#sha3-opl--current").text($(a).text()).attr("data-val",e)}function shaEncode(){var e=$("input[name='shaRadioOptions']:checked").val();$("#result-area").val("").val("SHA3"!==e?CryptoJS[e](editor.getValue()).toString():CryptoJS[e](editor.getValue(),{outputLength:parseInt($("#sha3-opl--current").attr("data-val"))}).toString())}function xmorseEncode(){$("#result-area").val("").val(xmorse.encode(editor.getValue(),{space:$("#xmorse-space").val()||"/","long":$("#xmorse-short").val()||".","short":$("#xmorse-long").val()||"-"}))}function xmorseDecode(){$("#result-area").val("").val(xmorse.decode(editor.getValue(),{space:$("#xmorse-space").val()||"/","long":$("#xmorse-short").val()||".","short":$("#xmorse-long").val()||"-"}))}var editor=CodeMirror.fromTextArea(document.getElementById("input-area"),{lineNumbers:!0,lineWrapping:!0});$("input[name='cryptoJsRadioOptions']").change(function(){var e=$("input[name='cryptoJsRadioOptions']:checked");"RC4Drop"===e.val()?$("#drop").removeClass("hide"):$("#drop").addClass("hide")}),$("input[name='shaRadioOptions']").change(function(){var e=$("input[name='shaRadioOptions']:checked");"SHA3"===e.val()?$(".sha-3-opl").removeClass("hide"):$(".sha-3-opl").addClass("hide")});</script>
+    <script language="javascript">
+      var editor = CodeMirror.fromTextArea(
+        document.getElementById("input-area"),
+        {
+          lineNumbers: true,
+          lineWrapping: true,
+        }
+      );
+      function base64Encode() {
+        $("#result-area").val("").val(Base64.encode(editor.getValue()));
+      }
+      function base64Decode() {
+        $("#result-area").val("").val(Base64.decode(editor.getValue()));
+      }
+      function exchange() {
+        var i = editor.getValue(),
+          o = $("#result-area").val();
+        editor.setValue(o);
+        $("#result-area").val("").val(i);
+      }
+      function emptyResult() {
+        $("#result-area").val("");
+      }
+      function emptyAll() {
+        editor.setValue("");
+        $("#result-area").val("");
+      }
+      function urlEncodeURI() {
+        $("#result-area").val("").val(encodeURI(editor.getValue()));
+      }
+      function urlDecodeURI() {
+        $("#result-area").val("").val(decodeURI(editor.getValue()));
+      }
+      function urlEncodeURIComponent() {
+        $("#result-area").val("").val(encodeURIComponent(editor.getValue()));
+      }
+      function urlDecodeURIComponent() {
+        $("#result-area").val("").val(decodeURIComponent(editor.getValue()));
+      }
+      function unicodeEncode() {
+        var str = editor.getValue();
+        var res = [];
+        for (var i = 0; i < str.length; i++) {
+          res[i] = ("00" + str.charCodeAt(i).toString(16)).slice(-4);
+        }
+        $("#result-area")
+          .val("")
+          .val("\\u" + res.join("\\u"));
+      }
+      function unicodeDecode() {
+        $("#result-area")
+          .val("")
+          .val(unescape(editor.getValue().replace(/\\/g, "%")));
+      }
+      function unicodeEncodeCN() {
+        var str = editor.getValue();
+        $("#result-area")
+          .val("")
+          .val(
+            str.replace(/([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/g, function (
+              newStr
+            ) {
+              return "\\u" + newStr.charCodeAt(0).toString(16);
+            })
+          );
+      }
+      function unicodeDecodeCN() {
+        var str = editor.getValue();
+        $("#result-area")
+          .val("")
+          .val(unescape(str.replace(/\\/g, "%")).replace(/%/g, "\\"));
+      }
+      function md5Encode() {
+        var str = editor.getValue();
+        var key = $.trim($("#md5-key").val());
+        $("#result-area")
+          .val("")
+          .val(key ? md5(str, key) : md5(str));
+      }
+      function md5Decode() {
+        // window.location.href = "https://www.somd5.com/";
+      }
+      function changeAesModes(val, obj) {
+        $("#aes-modes--current").text($(obj).text()).attr("data-val", val);
+      }
+      function changeAesPadding(val, obj) {
+        $("#aes-padding--current").text($(obj).text()).attr("data-val", val);
+      }
+      function aesEncode() {
+        var iv = $.trim($("#aes-iv").val());
+        var params = iv
+          ? {
+              iv: CryptoJS.enc.Hex.parse(iv),
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            }
+          : {
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            };
+        var key = iv
+          ? CryptoJS.enc.Hex.parse($("#aes-key").val())
+          : $("#aes-key").val();
+        $("#result-area")
+          .val("")
+          .val(CryptoJS.AES.encrypt(editor.getValue(), key, params).toString());
+      }
+      function aesDecode() {
+        var iv = $.trim($("#aes-iv").val());
+        var params = iv
+          ? {
+              iv: CryptoJS.enc.Hex.parse(iv),
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            }
+          : {
+              mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
+              padding:
+                CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
+            };
+        var key = iv
+          ? CryptoJS.enc.Hex.parse($("#aes-key").val())
+          : $("#aes-key").val();
+        $("#result-area")
+          .val("")
+          .val(
+            CryptoJS.AES.decrypt(editor.getValue(), key, params).toString(
+              CryptoJS.enc.Utf8
+            )
+          );
+      }
+      $("input[name='cryptoJsRadioOptions']").change(function () {
+        var This = $("input[name='cryptoJsRadioOptions']:checked");
+        if (This.val() === "RC4Drop") {
+          $("#drop").removeClass("hide");
+        } else {
+          $("#drop").addClass("hide");
+        }
+      });
+      function cryptoJsEncode() {
+        var type = $("input[name='cryptoJsRadioOptions']:checked").val();
+        var key = $("#crypto-js-key").val();
+        if (!key) {
+          alert("请先输入用于加密的密钥");
+          return false;
+        }
+        if (type !== "RC4Drop") {
+          $("#result-area")
+            .val("")
+            .val(CryptoJS[type].encrypt(editor.getValue(), key).toString());
+        } else {
+          var drop = parseInt($("#drop").val() || 768);
+          $("#result-area")
+            .val("")
+            .val(
+              CryptoJS[type]
+                .encrypt(editor.getValue(), key, {
+                  drop: drop, // 3072 / 4
+                })
+                .toString()
+            );
+        }
+      }
+      function cryptoJsDecode() {
+        var type = $("input[name='cryptoJsRadioOptions']:checked").val();
+        var key = $("#crypto-js-key").val();
+        if (!key) {
+          alert("请先输入用于加密的密钥");
+          return false;
+        }
+        if (type !== "RC4Drop") {
+          $("#result-area")
+            .val("")
+            .val(
+              CryptoJS[type]
+                .decrypt(editor.getValue(), key)
+                .toString(CryptoJS.enc.Utf8)
+            );
+        } else {
+          var drop = parseInt($("#drop").val() || 768);
+          $("#result-area")
+            .val("")
+            .val(
+              CryptoJS[type]
+                .decrypt(editor.getValue(), key, {
+                  drop: drop, // 3072 / 4
+                })
+                .toString(CryptoJS.enc.Utf8)
+            );
+        }
+      }
+      $("input[name='shaRadioOptions']").change(function () {
+        var This = $("input[name='shaRadioOptions']:checked");
+        if (This.val() === "SHA3") {
+          $(".sha-3-opl").removeClass("hide");
+        } else {
+          $(".sha-3-opl").addClass("hide");
+        }
+      });
+      function changeSha3Opl(val, obj) {
+        $("#sha3-opl--current").text($(obj).text()).attr("data-val", val);
+      }
+      function shaEncode() {
+        var type = $("input[name='shaRadioOptions']:checked").val();
+        if (type !== "SHA3") {
+          $("#result-area")
+            .val("")
+            .val(CryptoJS[type](editor.getValue()).toString());
+        } else {
+          $("#result-area")
+            .val("")
+            .val(
+              CryptoJS[type](editor.getValue(), {
+                outputLength: parseInt(
+                  $("#sha3-opl--current").attr("data-val")
+                ),
+              }).toString()
+            );
+        }
+      }
+      function xmorseEncode() {
+        $("#result-area")
+          .val("")
+          .val(
+            xmorse.encode(editor.getValue(), {
+              space: $("#xmorse-space").val() || "/",
+              long: $("#xmorse-short").val() || ".",
+              short: $("#xmorse-long").val() || "-",
+            })
+          );
+      }
+      function xmorseDecode() {
+        $("#result-area")
+          .val("")
+          .val(
+            xmorse.decode(editor.getValue(), {
+              space: $("#xmorse-space").val() || "/",
+              long: $("#xmorse-short").val() || ".",
+              short: $("#xmorse-long").val() || "-",
+            })
+          );
+      }
+    </script>
     <script>
-      ;var encode_version = 'sojson.v5', iupsu = '__0x81aec',  __0x81aec=['w6PDqsOIDHQGbMOICA==','5YqY6Zqn54mE5py55YyN772ULsON5L6A5ayH5p2S5b6Y56iI','w4fDhsOoGXo=','WcO0wqPCnE8=','w7nDncOtwp8n','w4DCncKVwpTDig==','acOQwrl8w64=','GW3DiDXDuxV2','wp4rwozCgsOZEQ==','Z8KwEMOj','MMKwYcOsDsOvwpHCsMKBaMKDPD/CjcO9d2oaw7TDqjo=','OsKRDg=='];(function(_0x3ce31f,_0x144101){var _0x372f82=function(_0x342401){while(--_0x342401){_0x3ce31f['push'](_0x3ce31f['shift']());}};_0x372f82(++_0x144101);}(__0x81aec,0xbb));var _0xc516=function(_0x23bcf0,_0x334e47){_0x23bcf0=_0x23bcf0-0x0;var _0x66bca5=__0x81aec[_0x23bcf0];if(_0xc516['initialized']===undefined){(function(){var _0x457e39=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4bbb67='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x457e39['atob']||(_0x457e39['atob']=function(_0x23aed5){var _0x38b9eb=String(_0x23aed5)['replace'](/=+$/,'');for(var _0x5f58c8=0x0,_0x128173,_0x56bc83,_0x15d28d=0x0,_0x61e269='';_0x56bc83=_0x38b9eb['charAt'](_0x15d28d++);~_0x56bc83&&(_0x128173=_0x5f58c8%0x4?_0x128173*0x40+_0x56bc83:_0x56bc83,_0x5f58c8++%0x4)?_0x61e269+=String['fromCharCode'](0xff&_0x128173>>(-0x2*_0x5f58c8&0x6)):0x0){_0x56bc83=_0x4bbb67['indexOf'](_0x56bc83);}return _0x61e269;});}());var _0x23562c=function(_0x1d9b6c,_0x18c718){var _0x57441b=[],_0x1448f8=0x0,_0x28ad10,_0x566204='',_0x4660c0='';_0x1d9b6c=atob(_0x1d9b6c);for(var _0x53e437=0x0,_0x209976=_0x1d9b6c['length'];_0x53e437<_0x209976;_0x53e437++){_0x4660c0+='%'+('00'+_0x1d9b6c['charCodeAt'](_0x53e437)['toString'](0x10))['slice'](-0x2);}_0x1d9b6c=decodeURIComponent(_0x4660c0);for(var _0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x57441b[_0x5067d9]=_0x5067d9;}for(_0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9]+_0x18c718['charCodeAt'](_0x5067d9%_0x18c718['length']))%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;}_0x5067d9=0x0;_0x1448f8=0x0;for(var _0x20f442=0x0;_0x20f442<_0x1d9b6c['length'];_0x20f442++){_0x5067d9=(_0x5067d9+0x1)%0x100;_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9])%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;_0x566204+=String['fromCharCode'](_0x1d9b6c['charCodeAt'](_0x20f442)^_0x57441b[(_0x57441b[_0x5067d9]+_0x57441b[_0x1448f8])%0x100]);}return _0x566204;};_0xc516['rc4']=_0x23562c;_0xc516['data']={};_0xc516['initialized']=!![];}var _0x589ce9=_0xc516['data'][_0x23bcf0];if(_0x589ce9===undefined){if(_0xc516['once']===undefined){_0xc516['once']=!![];}_0x66bca5=_0xc516['rc4'](_0x66bca5,_0x334e47);_0xc516['data'][_0x23bcf0]=_0x66bca5;}else{_0x66bca5=_0x589ce9;}return _0x66bca5;};;location['href'][_0xc516('0x0','3wEU')](_0xc516('0x1','n!Oy'))<0x0&&(location[_0xc516('0x2','$%hp')]=_0xc516('0x3','dAx3'));;(function(_0x16f569,_0x23dbf6,_0x2de187){var _0x1c6d43={'wXVHe':_0xc516('0x4','5cRX'),'QBDph':function _0x1badbc(_0x14e03d,_0x45ce42){return _0x14e03d!==_0x45ce42;},'pOLHg':_0xc516('0x5','Q@4('),'VKGIG':function _0x206a52(_0xeffa44,_0x1db721){return _0xeffa44===_0x1db721;},'fXGud':'sojson.v5','YYKHh':function _0x269e49(_0x2ca3e1,_0x12d6df){return _0x2ca3e1+_0x12d6df;},'SwcGS':_0xc516('0x6','F8%o')};_0x2de187='al';try{_0x2de187+=_0x1c6d43['wXVHe'];_0x23dbf6=encode_version;if(!(_0x1c6d43[_0xc516('0x7','Q@4(')](typeof _0x23dbf6,_0x1c6d43[_0xc516('0x8','0eVt')])&&_0x1c6d43[_0xc516('0x9','6Y2k')](_0x23dbf6,_0x1c6d43[_0xc516('0xa','B$W$')]))){_0x16f569[_0x2de187](_0x1c6d43[_0xc516('0xb','YNNi')]('删除','版本号，js会定期弹窗，还请支持我们的工作'));}}catch(_0x15dcb6){_0x16f569[_0x2de187](_0x1c6d43['SwcGS']);}}(window));;encode_version = 'sojson.v5';
+      // ;var encode_version = 'sojson.v5', iupsu = '__0x81aec',  __0x81aec=['w6PDqsOIDHQGbMOICA==','5YqY6Zqn54mE5py55YyN772ULsON5L6A5ayH5p2S5b6Y56iI','w4fDhsOoGXo=','WcO0wqPCnE8=','w7nDncOtwp8n','w4DCncKVwpTDig==','acOQwrl8w64=','GW3DiDXDuxV2','wp4rwozCgsOZEQ==','Z8KwEMOj','MMKwYcOsDsOvwpHCsMKBaMKDPD/CjcO9d2oaw7TDqjo=','OsKRDg=='];(function(_0x3ce31f,_0x144101){var _0x372f82=function(_0x342401){while(--_0x342401){_0x3ce31f['push'](_0x3ce31f['shift']());}};_0x372f82(++_0x144101);}(__0x81aec,0xbb));var _0xc516=function(_0x23bcf0,_0x334e47){_0x23bcf0=_0x23bcf0-0x0;var _0x66bca5=__0x81aec[_0x23bcf0];if(_0xc516['initialized']===undefined){(function(){var _0x457e39=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4bbb67='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x457e39['atob']||(_0x457e39['atob']=function(_0x23aed5){var _0x38b9eb=String(_0x23aed5)['replace'](/=+$/,'');for(var _0x5f58c8=0x0,_0x128173,_0x56bc83,_0x15d28d=0x0,_0x61e269='';_0x56bc83=_0x38b9eb['charAt'](_0x15d28d++);~_0x56bc83&&(_0x128173=_0x5f58c8%0x4?_0x128173*0x40+_0x56bc83:_0x56bc83,_0x5f58c8++%0x4)?_0x61e269+=String['fromCharCode'](0xff&_0x128173>>(-0x2*_0x5f58c8&0x6)):0x0){_0x56bc83=_0x4bbb67['indexOf'](_0x56bc83);}return _0x61e269;});}());var _0x23562c=function(_0x1d9b6c,_0x18c718){var _0x57441b=[],_0x1448f8=0x0,_0x28ad10,_0x566204='',_0x4660c0='';_0x1d9b6c=atob(_0x1d9b6c);for(var _0x53e437=0x0,_0x209976=_0x1d9b6c['length'];_0x53e437<_0x209976;_0x53e437++){_0x4660c0+='%'+('00'+_0x1d9b6c['charCodeAt'](_0x53e437)['toString'](0x10))['slice'](-0x2);}_0x1d9b6c=decodeURIComponent(_0x4660c0);for(var _0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x57441b[_0x5067d9]=_0x5067d9;}for(_0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9]+_0x18c718['charCodeAt'](_0x5067d9%_0x18c718['length']))%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;}_0x5067d9=0x0;_0x1448f8=0x0;for(var _0x20f442=0x0;_0x20f442<_0x1d9b6c['length'];_0x20f442++){_0x5067d9=(_0x5067d9+0x1)%0x100;_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9])%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;_0x566204+=String['fromCharCode'](_0x1d9b6c['charCodeAt'](_0x20f442)^_0x57441b[(_0x57441b[_0x5067d9]+_0x57441b[_0x1448f8])%0x100]);}return _0x566204;};_0xc516['rc4']=_0x23562c;_0xc516['data']={};_0xc516['initialized']=!![];}var _0x589ce9=_0xc516['data'][_0x23bcf0];if(_0x589ce9===undefined){if(_0xc516['once']===undefined){_0xc516['once']=!![];}_0x66bca5=_0xc516['rc4'](_0x66bca5,_0x334e47);_0xc516['data'][_0x23bcf0]=_0x66bca5;}else{_0x66bca5=_0x589ce9;}return _0x66bca5;};;location['href'][_0xc516('0x0','3wEU')](_0xc516('0x1','n!Oy'))<0x0&&(location[_0xc516('0x2','$%hp')]=_0xc516('0x3','dAx3'));;(function(_0x16f569,_0x23dbf6,_0x2de187){var _0x1c6d43={'wXVHe':_0xc516('0x4','5cRX'),'QBDph':function _0x1badbc(_0x14e03d,_0x45ce42){return _0x14e03d!==_0x45ce42;},'pOLHg':_0xc516('0x5','Q@4('),'VKGIG':function _0x206a52(_0xeffa44,_0x1db721){return _0xeffa44===_0x1db721;},'fXGud':'sojson.v5','YYKHh':function _0x269e49(_0x2ca3e1,_0x12d6df){return _0x2ca3e1+_0x12d6df;},'SwcGS':_0xc516('0x6','F8%o')};_0x2de187='al';try{_0x2de187+=_0x1c6d43['wXVHe'];_0x23dbf6=encode_version;if(!(_0x1c6d43[_0xc516('0x7','Q@4(')](typeof _0x23dbf6,_0x1c6d43[_0xc516('0x8','0eVt')])&&_0x1c6d43[_0xc516('0x9','6Y2k')](_0x23dbf6,_0x1c6d43[_0xc516('0xa','B$W$')]))){_0x16f569[_0x2de187](_0x1c6d43[_0xc516('0xb','YNNi')]('删除','版本号，js会定期弹窗，还请支持我们的工作'));}}catch(_0x15dcb6){_0x16f569[_0x2de187](_0x1c6d43['SwcGS']);}}(window));;encode_version = 'sojson.v5';
     </script>
     <script>
       var _hmt = _hmt || [];
