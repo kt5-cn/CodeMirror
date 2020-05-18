@@ -95,7 +95,7 @@
                     <div class="topBar">
                       <textarea
                         id="input-area"
-                        placeholder="请在此输入待加密 / 解密的内容..."
+                        placeholder="请在此输入待加密的原明文 / 待解密的密文...（注意：若用于私钥签名 / 公钥验签，则为原明文）"
                         class="textarea"
                       ></textarea>
                       <textarea
@@ -149,6 +149,61 @@
                               onclick="rsaDecode();"
                             >
                               解密
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          class="input-group input-group-sm"
+                          style="margin-top: 5px;"
+                        >
+                          <span class="input-group-addon"
+                            >RSA、RSA2 私钥签名，公钥验签</span
+                          >
+                          <div
+                            class="input-group-btn input-group-sm"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              onclick="rsaPrivKSign();"
+                            >
+                              RSA 私钥签名
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              onclick="rsa2PrivKSign();"
+                            >
+                              RSA2 私钥签名
+                            </button>
+                          </div>
+                          <div
+                            class="input-group-btn input-group-sm"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <input
+                              type="text"
+                              style="width: 300px;"
+                              class="form-control"
+                              id="rsa-sign"
+                              placeholder="请输入用于校验的签名（signature）"
+                            />
+                            <button
+                              type="button"
+                              class="btn btn-success"
+                              onclick="rsaPKVerify();"
+                            >
+                              RSA 公钥验签
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-success"
+                              onclick="rsa2PKVerify();"
+                            >
+                              RSA2 公钥验签
                             </button>
                           </div>
                         </div>
@@ -285,6 +340,60 @@
         $("#result-area")
           .val("")
           .val(KJUR.crypto.Cipher.decrypt(editor.getValue(), prv));
+      }
+      function rsaPrivKSign() {
+        // 签名
+        var signature = new KJUR.crypto.Signature({
+          alg: "SHA1withRSA",
+          prvkeypem: $("#priv-k").val(),
+        });
+        signature.updateString(editor.getValue());
+        // 签名返回结果是16进制字符串，注意转码
+        var a = signature.sign();
+        var sign = hextob64(a);
+        $("#result-area")
+          .val("")
+          .val("私钥签名：" + sign);
+      }
+      function rsaPKVerify() {
+        // 验签
+        var signatureVf = new KJUR.crypto.Signature({
+          alg: "SHA1withRSA",
+          prvkeypem: $("#pub-k").val(),
+        });
+        signatureVf.updateString(editor.getValue());
+        // 验签入参是16进制字符串，注意转码
+        var b = signatureVf.verify(b64tohex($("#rsa-sign").val()));
+        $("#result-area")
+          .val("")
+          .val("公钥验签：" + b);
+      }
+      function rsa2PrivKSign() {
+        // 签名
+        var signature = new KJUR.crypto.Signature({
+          alg: "SHA256WithRSA",
+          prvkeypem: $("#priv-k").val(),
+        });
+        signature.updateString(editor.getValue());
+        // 签名返回结果是16进制字符串，注意转码
+        var a = signature.sign();
+        var sign = hextob64(a);
+        $("#result-area")
+          .val("")
+          .val("私钥签名：" + sign);
+      }
+      function rsa2PKVerify() {
+        // 验签
+        var signatureVf = new KJUR.crypto.Signature({
+          alg: "SHA256WithRSA",
+          prvkeypem: $("#pub-k").val(),
+        });
+        signatureVf.updateString(editor.getValue());
+        // 验签入参是16进制字符串，注意转码
+        var b = signatureVf.verify(b64tohex($("#rsa-sign").val()));
+        $("#result-area")
+          .val("")
+          .val("公钥验签：" + b);
       }
     </script>
     <script>
