@@ -7,7 +7,7 @@
       name="viewport"
     />
     <title>
-      Base64编码、解码，网址URL编码、Escape解码，unicode、中文编码、解码，MD5编码解码，DES,AES等对称加密解密，SHA编码，摩斯密码加密解密
+      Base64编码、解码，网址URL编码、Escape解码，Unicode、中文编码、解码，MD5编码解码，DES,AES等对称加密解密，SHA编码，摩斯密码加密解密
       | 「A4纸」前端开发博客
     </title>
     <!-- Site CSS -->
@@ -86,7 +86,7 @@
                         id="desc1"
                         style="margin-top: 15px; font-size: 12px; color: #999;"
                       >
-                        Base64编码、解码，网址URL编码、Escape解码，unicode、中文编码、解码，MD5编码解码，DES,AES等对称加密解密，RSA,RSA2公钥私钥加密解密，SHA编码，摩斯密码加密解密
+                        Base64编码、解码，网址URL编码、Escape解码，Unicode、中文编码、解码，MD5编码解码，DES,AES等对称加密解密，RSA,RSA2公钥私钥加密解密，SHA编码，摩斯密码加密解密
                       </div>
                     </div>
                   </div>
@@ -240,22 +240,85 @@
                       </form>
                       <form class="well form-inline">
                         <div class="input-group input-group-sm">
-                          <span class="input-group-addon">AES 加密 / 解密</span>
+                          <span class="input-group-addon">AES</span>
                           <input
                             type="text"
-                            style="width: 200px;"
+                            style="width: 180px;"
                             class="form-control"
                             id="aes-key"
                             placeholder="请输入用于 AES 加密的密钥"
                           />
                           <input
                             type="text"
-                            style="width: 220px;"
+                            style="width: 210px;"
                             class="form-control"
                             id="aes-iv"
                             placeholder="请输入用于 AES 加密的 IV（可选）"
                           />
-                          <span class="input-group-addon">Modes 模式</span>
+                          <span class="input-group-addon">key、iv 编码格式</span>
+                          <div
+                            class="input-group-btn"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <button
+                              id="aes-encoding-format"
+                              type="button"
+                              class="btn btn-default dropdown-toggle"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <span id="aes-ef--current" data-val="Utf8"
+                                >Utf8(默认)</span
+                              ><span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesEf('Utf8',this)"
+                                  >Utf8(默认)</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesEf('Base64',this)"
+                                  >Base64</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesEf('Latin1',this)"
+                                  >Latin1</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesEf('Hex',this)"
+                                  >Hex</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesEf('Utf16',this)"
+                                  >Utf16</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="javascript:;"
+                                  onclick="changeAesEf('Utf16LE',this)"
+                                  >Utf16LE</a
+                                >
+                              </li>
+                            </ul>
+                          </div>
+                          <span class="input-group-addon">Modes</span>
                           <div
                             class="input-group-btn"
                             role="group"
@@ -270,7 +333,7 @@
                               aria-expanded="false"
                             >
                               <span id="aes-modes--current" data-val="CBC"
-                                >CBC（默认）</span
+                                >CBC(默认)</span
                               ><span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
@@ -278,7 +341,7 @@
                                 <a
                                   href="javascript:;"
                                   onclick="changeAesModes('CBC',this)"
-                                  >CBC（默认）</a
+                                  >CBC(默认)</a
                                 >
                               </li>
                               <li>
@@ -312,7 +375,7 @@
                             </ul>
                           </div>
                           <span class="input-group-addon"
-                            >Padding 填充方案</span
+                            >Padding</span
                           >
                           <div
                             class="input-group-btn"
@@ -328,7 +391,7 @@
                               aria-expanded="false"
                             >
                               <span id="aes-padding--current" data-val="Pkcs7"
-                                >Pkcs7（默认）</span
+                                >Pkcs7(默认)</span
                               ><span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
@@ -336,7 +399,7 @@
                                 <a
                                   href="javascript:;"
                                   onclick="changeAesPadding('Pkcs7',this)"
-                                  >Pkcs7（默认）</a
+                                  >Pkcs7(默认)</a
                                 >
                               </li>
                               <li>
@@ -811,11 +874,15 @@
       function changeAesPadding(val, obj) {
         $("#aes-padding--current").text($(obj).text()).attr("data-val", val);
       }
+      function changeAesEf(val, obj) {
+        $("#aes-ef--current").text($(obj).text()).attr("data-val", val);
+      }
       function aesEncode() {
         var iv = $.trim($("#aes-iv").val());
+        var ef = $("#aes-ef--current").attr("data-val");
         var params = iv
           ? {
-              iv: CryptoJS.enc.Hex.parse(iv),
+              iv: CryptoJS.enc[ef].parse(iv),
               mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
               padding:
                 CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
@@ -826,7 +893,7 @@
                 CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
             };
         var key = iv
-          ? CryptoJS.enc.Hex.parse($("#aes-key").val())
+          ? CryptoJS.enc[ef].parse($("#aes-key").val())
           : $("#aes-key").val();
         $("#result-area")
           .val("")
@@ -834,9 +901,10 @@
       }
       function aesDecode() {
         var iv = $.trim($("#aes-iv").val());
+        var ef = $("#aes-ef--current").attr("data-val");
         var params = iv
           ? {
-              iv: CryptoJS.enc.Hex.parse(iv),
+              iv: CryptoJS.enc[ef].parse(iv),
               mode: CryptoJS.mode[$("#aes-modes--current").attr("data-val")],
               padding:
                 CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
@@ -847,7 +915,7 @@
                 CryptoJS.pad[$("#aes-padding--current").attr("data-val")],
             };
         var key = iv
-          ? CryptoJS.enc.Hex.parse($("#aes-key").val())
+          ? CryptoJS.enc[ef].parse($("#aes-key").val())
           : $("#aes-key").val();
         $("#result-area")
           .val("")
