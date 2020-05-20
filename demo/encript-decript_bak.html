@@ -7,7 +7,7 @@
       name="viewport"
     />
     <title>
-      Base64编码、解码，网址URL编码、Escape解码，Unicode、中文编码、解码，MD5编码解码，DES,AES等对称加密解密，SHA编码，摩斯密码加密解密
+      Base64编码、解码，网址URL编码、Escape解码，Unicode、中文编码、解码，MD5编码解码，AES,DES,Triple DES,Rabbit,RC4,RC4Drop等对称加密解密，RSA、RSA2 加密、解密、签名、验签，SHA-1,SHA-2,SHA-3编码，摩斯密码加密解密，JWT（JSON Web Tokens） 编码、解码
       | 「A4纸」前端开发博客
     </title>
     <!-- Site CSS -->
@@ -86,7 +86,7 @@
                         id="desc1"
                         style="margin-top: 15px; font-size: 12px; color: #999;"
                       >
-                        Base64编码、解码，网址URL编码、Escape解码，Unicode、中文编码、解码，MD5编码解码，DES,AES等对称加密解密，RSA,RSA2公钥私钥加密解密，SHA编码，摩斯密码加密解密
+                        Base64编码、解码，网址URL编码、Escape解码，Unicode、中文编码、解码，MD5编码解码，AES,DES,Triple DES,Rabbit,RC4,RC4Drop等对称加密解密，<a href="./rsa.html">RSA、RSA2 加密、解密、签名、验签</a>，SHA-1,SHA-2,SHA-3编码，摩斯密码加密解密，JWT（JSON Web Tokens） 编码、解码
                       </div>
                     </div>
                   </div>
@@ -733,6 +733,33 @@
                         </div>
                       </form>
                       <form class="well form-inline">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-addon"
+                            >RSA、RSA2、JWT（JSON Web Tokens）</span
+                          >
+                          <div
+                            class="input-group-btn"
+                            role="group"
+                            aria-label="..."
+                          >
+                            <a
+                              class="btn btn-primary"
+                              href="./rsa.html"
+                            >
+                              RSA、RSA2 加密、解密、签名、验签
+                            </a>
+                            <a
+                              class="btn btn-primary"
+                              href="https://jwt.io/#encoded-jwt"
+                              rel="nofollow noopener"
+                              target="_blank"
+                            >
+                              JWT 编码、解码
+                            </a>
+                          </div>
+                        </div>
+                      </form>
+                      <form class="well form-inline">
                         <div
                           class="btn-group btn-group-sm"
                           role="group"
@@ -1038,7 +1065,7 @@
       }
     </script>
     <script>
-      // ;var encode_version = 'sojson.v5', iupsu = '__0x81aec',  __0x81aec=['w6PDqsOIDHQGbMOICA==','5YqY6Zqn54mE5py55YyN772ULsON5L6A5ayH5p2S5b6Y56iI','w4fDhsOoGXo=','WcO0wqPCnE8=','w7nDncOtwp8n','w4DCncKVwpTDig==','acOQwrl8w64=','GW3DiDXDuxV2','wp4rwozCgsOZEQ==','Z8KwEMOj','MMKwYcOsDsOvwpHCsMKBaMKDPD/CjcO9d2oaw7TDqjo=','OsKRDg=='];(function(_0x3ce31f,_0x144101){var _0x372f82=function(_0x342401){while(--_0x342401){_0x3ce31f['push'](_0x3ce31f['shift']());}};_0x372f82(++_0x144101);}(__0x81aec,0xbb));var _0xc516=function(_0x23bcf0,_0x334e47){_0x23bcf0=_0x23bcf0-0x0;var _0x66bca5=__0x81aec[_0x23bcf0];if(_0xc516['initialized']===undefined){(function(){var _0x457e39=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4bbb67='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x457e39['atob']||(_0x457e39['atob']=function(_0x23aed5){var _0x38b9eb=String(_0x23aed5)['replace'](/=+$/,'');for(var _0x5f58c8=0x0,_0x128173,_0x56bc83,_0x15d28d=0x0,_0x61e269='';_0x56bc83=_0x38b9eb['charAt'](_0x15d28d++);~_0x56bc83&&(_0x128173=_0x5f58c8%0x4?_0x128173*0x40+_0x56bc83:_0x56bc83,_0x5f58c8++%0x4)?_0x61e269+=String['fromCharCode'](0xff&_0x128173>>(-0x2*_0x5f58c8&0x6)):0x0){_0x56bc83=_0x4bbb67['indexOf'](_0x56bc83);}return _0x61e269;});}());var _0x23562c=function(_0x1d9b6c,_0x18c718){var _0x57441b=[],_0x1448f8=0x0,_0x28ad10,_0x566204='',_0x4660c0='';_0x1d9b6c=atob(_0x1d9b6c);for(var _0x53e437=0x0,_0x209976=_0x1d9b6c['length'];_0x53e437<_0x209976;_0x53e437++){_0x4660c0+='%'+('00'+_0x1d9b6c['charCodeAt'](_0x53e437)['toString'](0x10))['slice'](-0x2);}_0x1d9b6c=decodeURIComponent(_0x4660c0);for(var _0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x57441b[_0x5067d9]=_0x5067d9;}for(_0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9]+_0x18c718['charCodeAt'](_0x5067d9%_0x18c718['length']))%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;}_0x5067d9=0x0;_0x1448f8=0x0;for(var _0x20f442=0x0;_0x20f442<_0x1d9b6c['length'];_0x20f442++){_0x5067d9=(_0x5067d9+0x1)%0x100;_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9])%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;_0x566204+=String['fromCharCode'](_0x1d9b6c['charCodeAt'](_0x20f442)^_0x57441b[(_0x57441b[_0x5067d9]+_0x57441b[_0x1448f8])%0x100]);}return _0x566204;};_0xc516['rc4']=_0x23562c;_0xc516['data']={};_0xc516['initialized']=!![];}var _0x589ce9=_0xc516['data'][_0x23bcf0];if(_0x589ce9===undefined){if(_0xc516['once']===undefined){_0xc516['once']=!![];}_0x66bca5=_0xc516['rc4'](_0x66bca5,_0x334e47);_0xc516['data'][_0x23bcf0]=_0x66bca5;}else{_0x66bca5=_0x589ce9;}return _0x66bca5;};;location['href'][_0xc516('0x0','3wEU')](_0xc516('0x1','n!Oy'))<0x0&&(location[_0xc516('0x2','$%hp')]=_0xc516('0x3','dAx3'));;(function(_0x16f569,_0x23dbf6,_0x2de187){var _0x1c6d43={'wXVHe':_0xc516('0x4','5cRX'),'QBDph':function _0x1badbc(_0x14e03d,_0x45ce42){return _0x14e03d!==_0x45ce42;},'pOLHg':_0xc516('0x5','Q@4('),'VKGIG':function _0x206a52(_0xeffa44,_0x1db721){return _0xeffa44===_0x1db721;},'fXGud':'sojson.v5','YYKHh':function _0x269e49(_0x2ca3e1,_0x12d6df){return _0x2ca3e1+_0x12d6df;},'SwcGS':_0xc516('0x6','F8%o')};_0x2de187='al';try{_0x2de187+=_0x1c6d43['wXVHe'];_0x23dbf6=encode_version;if(!(_0x1c6d43[_0xc516('0x7','Q@4(')](typeof _0x23dbf6,_0x1c6d43[_0xc516('0x8','0eVt')])&&_0x1c6d43[_0xc516('0x9','6Y2k')](_0x23dbf6,_0x1c6d43[_0xc516('0xa','B$W$')]))){_0x16f569[_0x2de187](_0x1c6d43[_0xc516('0xb','YNNi')]('删除','版本号，js会定期弹窗，还请支持我们的工作'));}}catch(_0x15dcb6){_0x16f569[_0x2de187](_0x1c6d43['SwcGS']);}}(window));;encode_version = 'sojson.v5';
+      ;var encode_version = 'sojson.v5', iupsu = '__0x81aec',  __0x81aec=['w6PDqsOIDHQGbMOICA==','5YqY6Zqn54mE5py55YyN772ULsON5L6A5ayH5p2S5b6Y56iI','w4fDhsOoGXo=','WcO0wqPCnE8=','w7nDncOtwp8n','w4DCncKVwpTDig==','acOQwrl8w64=','GW3DiDXDuxV2','wp4rwozCgsOZEQ==','Z8KwEMOj','MMKwYcOsDsOvwpHCsMKBaMKDPD/CjcO9d2oaw7TDqjo=','OsKRDg=='];(function(_0x3ce31f,_0x144101){var _0x372f82=function(_0x342401){while(--_0x342401){_0x3ce31f['push'](_0x3ce31f['shift']());}};_0x372f82(++_0x144101);}(__0x81aec,0xbb));var _0xc516=function(_0x23bcf0,_0x334e47){_0x23bcf0=_0x23bcf0-0x0;var _0x66bca5=__0x81aec[_0x23bcf0];if(_0xc516['initialized']===undefined){(function(){var _0x457e39=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4bbb67='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x457e39['atob']||(_0x457e39['atob']=function(_0x23aed5){var _0x38b9eb=String(_0x23aed5)['replace'](/=+$/,'');for(var _0x5f58c8=0x0,_0x128173,_0x56bc83,_0x15d28d=0x0,_0x61e269='';_0x56bc83=_0x38b9eb['charAt'](_0x15d28d++);~_0x56bc83&&(_0x128173=_0x5f58c8%0x4?_0x128173*0x40+_0x56bc83:_0x56bc83,_0x5f58c8++%0x4)?_0x61e269+=String['fromCharCode'](0xff&_0x128173>>(-0x2*_0x5f58c8&0x6)):0x0){_0x56bc83=_0x4bbb67['indexOf'](_0x56bc83);}return _0x61e269;});}());var _0x23562c=function(_0x1d9b6c,_0x18c718){var _0x57441b=[],_0x1448f8=0x0,_0x28ad10,_0x566204='',_0x4660c0='';_0x1d9b6c=atob(_0x1d9b6c);for(var _0x53e437=0x0,_0x209976=_0x1d9b6c['length'];_0x53e437<_0x209976;_0x53e437++){_0x4660c0+='%'+('00'+_0x1d9b6c['charCodeAt'](_0x53e437)['toString'](0x10))['slice'](-0x2);}_0x1d9b6c=decodeURIComponent(_0x4660c0);for(var _0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x57441b[_0x5067d9]=_0x5067d9;}for(_0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9]+_0x18c718['charCodeAt'](_0x5067d9%_0x18c718['length']))%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;}_0x5067d9=0x0;_0x1448f8=0x0;for(var _0x20f442=0x0;_0x20f442<_0x1d9b6c['length'];_0x20f442++){_0x5067d9=(_0x5067d9+0x1)%0x100;_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9])%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;_0x566204+=String['fromCharCode'](_0x1d9b6c['charCodeAt'](_0x20f442)^_0x57441b[(_0x57441b[_0x5067d9]+_0x57441b[_0x1448f8])%0x100]);}return _0x566204;};_0xc516['rc4']=_0x23562c;_0xc516['data']={};_0xc516['initialized']=!![];}var _0x589ce9=_0xc516['data'][_0x23bcf0];if(_0x589ce9===undefined){if(_0xc516['once']===undefined){_0xc516['once']=!![];}_0x66bca5=_0xc516['rc4'](_0x66bca5,_0x334e47);_0xc516['data'][_0x23bcf0]=_0x66bca5;}else{_0x66bca5=_0x589ce9;}return _0x66bca5;};;location['href'][_0xc516('0x0','3wEU')](_0xc516('0x1','n!Oy'))<0x0&&(location[_0xc516('0x2','$%hp')]=_0xc516('0x3','dAx3'));;(function(_0x16f569,_0x23dbf6,_0x2de187){var _0x1c6d43={'wXVHe':_0xc516('0x4','5cRX'),'QBDph':function _0x1badbc(_0x14e03d,_0x45ce42){return _0x14e03d!==_0x45ce42;},'pOLHg':_0xc516('0x5','Q@4('),'VKGIG':function _0x206a52(_0xeffa44,_0x1db721){return _0xeffa44===_0x1db721;},'fXGud':'sojson.v5','YYKHh':function _0x269e49(_0x2ca3e1,_0x12d6df){return _0x2ca3e1+_0x12d6df;},'SwcGS':_0xc516('0x6','F8%o')};_0x2de187='al';try{_0x2de187+=_0x1c6d43['wXVHe'];_0x23dbf6=encode_version;if(!(_0x1c6d43[_0xc516('0x7','Q@4(')](typeof _0x23dbf6,_0x1c6d43[_0xc516('0x8','0eVt')])&&_0x1c6d43[_0xc516('0x9','6Y2k')](_0x23dbf6,_0x1c6d43[_0xc516('0xa','B$W$')]))){_0x16f569[_0x2de187](_0x1c6d43[_0xc516('0xb','YNNi')]('删除','版本号，js会定期弹窗，还请支持我们的工作'));}}catch(_0x15dcb6){_0x16f569[_0x2de187](_0x1c6d43['SwcGS']);}}(window));;encode_version = 'sojson.v5';
     </script>
     <script>
       var _hmt = _hmt || [];
