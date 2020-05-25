@@ -7,6 +7,8 @@
 <meta name="keywords" content="在线代码编辑器,web代码编辑器，移动端代码编辑器,webide,手机端代码编辑器，网页代码编辑器">
 <link rel=stylesheet href="static/css/docs.css">
 <link rel=stylesheet href="static/css/codemirror.css">
+<link rel="stylesheet" href="static/css/show-hint.css">
+<link rel="stylesheet" href="static/css/fullscreen.css">
 <link rel="stylesheet" href="static/css/night.css">
 <link rel="stylesheet" href="static/css/foldgutter.css" />
 <script src="static/js/codemirror.js"></script>
@@ -23,6 +25,13 @@
 <script src="static/js/active-line.js"></script>
 <script src="static/js/matchtags.js"></script>
 <script src="static/js/trailingspace.js"></script>
+<script src="static/js/fullscreen.js"></script>
+<script src="static/js/show-hint.js"></script>
+<script src="static/js/css-hint2.js"></script>
+<script src="static/js/html-hint.js"></script>
+<script src="static/js/xml-hint.js"></script>
+<script src="static/js/javascript-hint.js"></script>
+<script src="static/js/anyword-hint.js"></script>
 <style type=text/css>
       .CodeMirror {
         float: left;
@@ -80,6 +89,24 @@
         background-image: radial-gradient(currentColor .5px, transparent .5px);
         background-size: calc(13 * .5px) calc(13 * .5px);
       }
+      .hide {
+        display: none !important;
+      }
+      .save-tips {
+        display: block;
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        color: #fff;
+        background: burlywood;
+        font-weight: 700;
+      }
+      .CodeMirror-fullscreen {
+        width: 100% !important;
+      }
     </style>
 </head>
 <body>
@@ -130,10 +157,14 @@
 </html>
     </textarea>
     <iframe id="preview"></iframe>
-    <div class="btns"><!-- <button class="btn" id="format-btn">格式化代码</button> --><button class="btn" id="download-btn">下载 html 文件</button></div>
+    <div class="btns"><button class="btn" id="format-btn">格式化代码</button><button class="btn" id="full-screen-btn">全屏编辑</button><button class="btn" id="download-btn">下载 html 文件</button></div>
+    <div class="save-tips hide" id="save-tips"><span>自动保存成功...</span></div>
     <script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/js-beautify/1.11.0/beautify.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/js-beautify/1.11.0/beautify-html.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/js-beautify/1.11.0/beautify-css.min.js"></script>
     <script>
-      var delay;
+      var delay, saveTimer, hintTimer;
       // Initialize CodeMirror editor with a nice html5 canvas demo.
       var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
         mode: 'text/html',
@@ -144,20 +175,45 @@
         foldGutter: true,
         gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
         matchTags: {bothTags: true},
-        showTrailingSpace: true
+        showTrailingSpace: true,
+        extraKeys: {
+          "F11": function(cm) {
+            cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+          },
+          "Esc": function(cm) {
+            if (cm.getOption("fullScreen")){
+              cm.setOption("fullScreen", false);
+            }
+          }
+        }
       });
       editor.setOption("theme", "night");
       editor.on("change", function() {
         clearTimeout(delay);
+        clearTimeout(saveTimer);
         delay = setTimeout(updatePreview, 300);
+        saveTimer = setTimeout(saveToLocalStorage, 5000);
+      });
+
+      editor.on("cursorActivity", function () {
+        clearTimeout(hintTimer);
+        hintTimer = setTimeout(function () {
+          var words = editor.getValue() + "";
+          // 利用正则取出用户输入的所有的英文的字母
+          words = words.replace(/[a-z]+[\-|\']+[a-z]+/ig, '').match(/([a-z]+)/ig);
+          CodeMirror.ukeys = words;
+          editor.showHint();
+        }, 1000);
       });
       
       function updatePreview() {
-        var previewFrame = document.getElementById('preview');
-        var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
-        preview.open();
-        preview.write(editor.getValue());
-        preview.close();
+        try {
+          var previewFrame = document.getElementById('preview');
+          var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+          preview.open();
+          preview.write(editor.getValue());
+          preview.close();
+        } catch(e) {}
       }
       setTimeout(updatePreview, 300);
 
@@ -175,15 +231,49 @@
         editor.commentRange(isComment, range.from, range.to);
       }
 
-/*       var $formatBtn = document.getElementById('format-btn');
+      var $formatBtn = document.getElementById('format-btn');
       $formatBtn.onclick = function () {
-      } */
+        editor.setValue(html_beautify(editor.getValue()));
+      }
+
+      var $fsBtn = document.getElementById('full-screen-btn');
+      $fsBtn.onclick = function () {
+        editor.setOption("fullScreen", !editor.getOption("fullScreen"));
+      }
 
       var $dowloadBtn = document.getElementById('download-btn');
       $dowloadBtn.onclick = function () {
         var blob = new Blob([editor.getValue()], {type: "text/plain;charset=utf-8"});
         saveAs(blob, new Date().valueOf() + ".html");
       }
+
+      function saveToLocalStorage () {
+        if(window.localStorage) {
+          var storage = window.localStorage;
+          storage.setItem("a4z_cn_tool_preview_time", new Date().toLocaleString());
+          storage.setItem("a4z_cn_tool_preview", editor.getValue());
+          var el = document.getElementById('save-tips');
+          el.classList.remove('hide');
+          setTimeout(function () {
+            el.classList.add('hide');
+          }, 2500);
+        }
+      }
+
+      function loadLocalStorage () {
+        if(window.localStorage) {
+          var storage = window.localStorage;
+          var val = storage.getItem("a4z_cn_tool_preview");
+          var time = storage.getItem("a4z_cn_tool_preview_time");
+          if(val) {
+            var res = confirm("加载上次已保存的内容？" + (time ? "保存时间：" + time : ""));
+            if(res) {
+              editor.setValue(val);
+            }
+          }
+        }
+      }
+      setTimeout(loadLocalStorage, 3000);
     </script>
   </article>
   <script> 
