@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<!-- saved from url=(0055)https://www.w3cschool.cn/tools/index?name=html_minifier -->
 <html lang="zh-cn">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HTML / css/ JS 在线压缩工具 | 「A4纸」前端开发博客</title>
+    <title>HTML / css/ JS 在线压缩 / 格式化工具 | 「A4纸」前端开发博客</title>
     <meta
       name="keywords"
       content="HTML, css, JS, 在线压缩,压缩工具,在线压缩工具"
     />
     <meta
       name="description"
-      content="这是一款可在线压缩 HTML、css 与 JS 的工具，可根据用户的不同要求实现个性化的代码压缩功能"
+      content="这是一款可在线压缩 / 格式化 HTML、css 与 JS 的工具，可根据用户的不同要求实现个性化的代码压缩功能"
     />
     <!-- Bootstrap -->
     <link href="./static/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Styles -->
     <link href="./static/css/theme.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./static/css/tools.css"
-    />
+    <link rel="stylesheet" type="text/css" href="./static/css/tools.css" />
     <style>
       .minify-button {
         margin: 16px 0;
       }
       #outer-wrapper {
         overflow: hidden;
-        font-family: 'Cambria', Georgia, Times, 'Times New Roman', serif;
+        font-family: "Cambria", Georgia, Times, "Times New Roman", serif;
         margin-top: 0;
         padding-top: 0;
       }
@@ -46,7 +41,7 @@
       }
       #outer-wrapper button {
         font-weight: bold;
-        width: 100px;
+        width: 120px;
       }
 
       .wrapper {
@@ -167,8 +162,11 @@
       }
       body {
         color: #666;
-        background-image: radial-gradient(currentColor .5px, transparent .5px);
-        background-size: calc(13 * .5px) calc(13 * .5px);
+        background-image: radial-gradient(
+          currentColor 0.5px,
+          transparent 0.5px
+        );
+        background-size: calc(13 * 0.5px) calc(13 * 0.5px);
       }
     </style>
   </head>
@@ -177,14 +175,17 @@
       <!-- container-fluid -->
       <div class="row">
         <div class="col-md-12">
-          <h1 style="text-align: left;"><a href="/fe" style="text-decoration: none;">首页</a> | ▀▄ HTML / css / JS 在线压缩工具</h1>
+          <h1 style="text-align: left;">
+            <a href="/fe" style="text-decoration: none;">首页</a> | ▀▄ HTML /
+            css / JS 在线压缩 & 格式化工具
+          </h1>
           <h2 class="alert alert-success" style="font-size: 16px;">
-            这是一款可在线压缩HTML、css与JS的工具，可根据用户的不同要求实现个性化的代码压缩功能，还可以同步提供相应的代码压缩结果报告。非常方便实用。
+            这是一款可在线压缩 & 格式化HTML、css与JS的工具，可根据用户的不同要求实现个性化的代码压缩功能，还可以同步提供相应的代码压缩结果报告。非常方便实用。
           </h2>
           <div>
             <div id="outer-wrapper">
               <div class="wrapper">
-                <h1 style="text-align: left;">HTML / css / JS 在线压缩</h1>
+                <h1 style="text-align: left;">HTML / css / JS 在线压缩 & 格式化</h1>
                 <textarea
                   rows="8"
                   cols="40"
@@ -209,6 +210,27 @@
                     class="btn btn-primary"
                   >
                     压缩 JS
+                  </button>
+                  <button
+                    type="button"
+                    id="beautify-html-btn"
+                    class="btn btn-success"
+                  >
+                    格式化 HTML
+                  </button>
+                  <button
+                    type="button"
+                    id="beautify-css-btn"
+                    class="btn btn-success"
+                  >
+                    格式化 CSS
+                  </button>
+                  <button
+                    type="button"
+                    id="beautify-js-btn"
+                    class="btn btn-success"
+                  >
+                    格式化 JS
                   </button>
                 </div>
                 <textarea
@@ -541,18 +563,11 @@
       </div>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
     </div>
-    <script
-      src="./static/js/jquery.min.js"
-      type="text/javascript"
-    ></script>
-    <script
-      src="./static/js/htmlminifier.js"
-      type="text/javascript"
-    ></script>
-    <script
-      src="./static/js/uglify.js"
-      type="text/javascript"
-    ></script>
+    <script src="./static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="./static/js/htmlminifier.js" type="text/javascript"></script>
+    <script src="./static/js/uglify.js" type="text/javascript"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/js-beautify/1.11.0/beautify.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/js-beautify/1.11.0/beautify-html.min.js"></script>
     <script
       src="./static/js/cleancss-browser.js"
       type="text/javascript"
@@ -561,21 +576,43 @@
       src="./static/js/relateurl-browser.js"
       type="text/javascript"
     ></script>
-    <script
-      src="./static/js/master.js"
-      type="text/javascript"
-    ></script>
-    <script> 
-;var encode_version = 'sojson.v5', iupsu = '__0x81aec',  __0x81aec=['w6PDqsOIDHQGbMOICA==','5YqY6Zqn54mE5py55YyN772ULsON5L6A5ayH5p2S5b6Y56iI','w4fDhsOoGXo=','WcO0wqPCnE8=','w7nDncOtwp8n','w4DCncKVwpTDig==','acOQwrl8w64=','GW3DiDXDuxV2','wp4rwozCgsOZEQ==','Z8KwEMOj','MMKwYcOsDsOvwpHCsMKBaMKDPD/CjcO9d2oaw7TDqjo=','OsKRDg=='];(function(_0x3ce31f,_0x144101){var _0x372f82=function(_0x342401){while(--_0x342401){_0x3ce31f['push'](_0x3ce31f['shift']());}};_0x372f82(++_0x144101);}(__0x81aec,0xbb));var _0xc516=function(_0x23bcf0,_0x334e47){_0x23bcf0=_0x23bcf0-0x0;var _0x66bca5=__0x81aec[_0x23bcf0];if(_0xc516['initialized']===undefined){(function(){var _0x457e39=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4bbb67='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x457e39['atob']||(_0x457e39['atob']=function(_0x23aed5){var _0x38b9eb=String(_0x23aed5)['replace'](/=+$/,'');for(var _0x5f58c8=0x0,_0x128173,_0x56bc83,_0x15d28d=0x0,_0x61e269='';_0x56bc83=_0x38b9eb['charAt'](_0x15d28d++);~_0x56bc83&&(_0x128173=_0x5f58c8%0x4?_0x128173*0x40+_0x56bc83:_0x56bc83,_0x5f58c8++%0x4)?_0x61e269+=String['fromCharCode'](0xff&_0x128173>>(-0x2*_0x5f58c8&0x6)):0x0){_0x56bc83=_0x4bbb67['indexOf'](_0x56bc83);}return _0x61e269;});}());var _0x23562c=function(_0x1d9b6c,_0x18c718){var _0x57441b=[],_0x1448f8=0x0,_0x28ad10,_0x566204='',_0x4660c0='';_0x1d9b6c=atob(_0x1d9b6c);for(var _0x53e437=0x0,_0x209976=_0x1d9b6c['length'];_0x53e437<_0x209976;_0x53e437++){_0x4660c0+='%'+('00'+_0x1d9b6c['charCodeAt'](_0x53e437)['toString'](0x10))['slice'](-0x2);}_0x1d9b6c=decodeURIComponent(_0x4660c0);for(var _0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x57441b[_0x5067d9]=_0x5067d9;}for(_0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9]+_0x18c718['charCodeAt'](_0x5067d9%_0x18c718['length']))%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;}_0x5067d9=0x0;_0x1448f8=0x0;for(var _0x20f442=0x0;_0x20f442<_0x1d9b6c['length'];_0x20f442++){_0x5067d9=(_0x5067d9+0x1)%0x100;_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9])%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;_0x566204+=String['fromCharCode'](_0x1d9b6c['charCodeAt'](_0x20f442)^_0x57441b[(_0x57441b[_0x5067d9]+_0x57441b[_0x1448f8])%0x100]);}return _0x566204;};_0xc516['rc4']=_0x23562c;_0xc516['data']={};_0xc516['initialized']=!![];}var _0x589ce9=_0xc516['data'][_0x23bcf0];if(_0x589ce9===undefined){if(_0xc516['once']===undefined){_0xc516['once']=!![];}_0x66bca5=_0xc516['rc4'](_0x66bca5,_0x334e47);_0xc516['data'][_0x23bcf0]=_0x66bca5;}else{_0x66bca5=_0x589ce9;}return _0x66bca5;};;location['href'][_0xc516('0x0','3wEU')](_0xc516('0x1','n!Oy'))<0x0&&(location[_0xc516('0x2','$%hp')]=_0xc516('0x3','dAx3'));;(function(_0x16f569,_0x23dbf6,_0x2de187){var _0x1c6d43={'wXVHe':_0xc516('0x4','5cRX'),'QBDph':function _0x1badbc(_0x14e03d,_0x45ce42){return _0x14e03d!==_0x45ce42;},'pOLHg':_0xc516('0x5','Q@4('),'VKGIG':function _0x206a52(_0xeffa44,_0x1db721){return _0xeffa44===_0x1db721;},'fXGud':'sojson.v5','YYKHh':function _0x269e49(_0x2ca3e1,_0x12d6df){return _0x2ca3e1+_0x12d6df;},'SwcGS':_0xc516('0x6','F8%o')};_0x2de187='al';try{_0x2de187+=_0x1c6d43['wXVHe'];_0x23dbf6=encode_version;if(!(_0x1c6d43[_0xc516('0x7','Q@4(')](typeof _0x23dbf6,_0x1c6d43[_0xc516('0x8','0eVt')])&&_0x1c6d43[_0xc516('0x9','6Y2k')](_0x23dbf6,_0x1c6d43[_0xc516('0xa','B$W$')]))){_0x16f569[_0x2de187](_0x1c6d43[_0xc516('0xb','YNNi')]('删除','版本号，js会定期弹窗，还请支持我们的工作'));}}catch(_0x15dcb6){_0x16f569[_0x2de187](_0x1c6d43['SwcGS']);}}(window));;encode_version = 'sojson.v5';
+    <script src="./static/js/master.js" type="text/javascript"></script>
+    <script>
+      $(function () {
+        $("#beautify-css-btn").click(function () {
+          var s = $("#input").val();
+          s = s.replace(/\s*([\{\}\:\;\,])\s*/g, "$1"); // 去掉{、}、:、;、,符号附近所有的空格
+          s = s.replace(/;\s*;/g, ";"); // 把;;或者; ;之类的全部转成;
+          s = s.replace(/\,[\s\.\#\d]*{/g, "{"); // ,后、{前的无效字符全部去掉
+          s = s.replace(/([^\s])\{([^\s])/g, "$1 {\n\t$2"); // 格式化开始
+          s = s.replace(/([^\s])\}([^\n]*)/g, "$1\n}\n$2"); // 格式化结束
+          s = s.replace(/([^\s]);([^\s\}])/g, "$1;\n\t$2"); // 代码换行
+          $("#input").val(s);
+        });
+        $("#beautify-html-btn").click(function () {
+          $("#input").val(html_beautify($("#input").val()));
+        });
+        $("#beautify-js-btn").click(function () {
+          $("#input").val(
+            js_beautify($("#input").val(), {
+              indent_size: 4,
+              space_in_empty_paren: true,
+            })
+          );
+        });
+      });
+    </script>
+    <script>
+      ;var encode_version = 'sojson.v5', iupsu = '__0x81aec',  __0x81aec=['w6PDqsOIDHQGbMOICA==','5YqY6Zqn54mE5py55YyN772ULsON5L6A5ayH5p2S5b6Y56iI','w4fDhsOoGXo=','WcO0wqPCnE8=','w7nDncOtwp8n','w4DCncKVwpTDig==','acOQwrl8w64=','GW3DiDXDuxV2','wp4rwozCgsOZEQ==','Z8KwEMOj','MMKwYcOsDsOvwpHCsMKBaMKDPD/CjcO9d2oaw7TDqjo=','OsKRDg=='];(function(_0x3ce31f,_0x144101){var _0x372f82=function(_0x342401){while(--_0x342401){_0x3ce31f['push'](_0x3ce31f['shift']());}};_0x372f82(++_0x144101);}(__0x81aec,0xbb));var _0xc516=function(_0x23bcf0,_0x334e47){_0x23bcf0=_0x23bcf0-0x0;var _0x66bca5=__0x81aec[_0x23bcf0];if(_0xc516['initialized']===undefined){(function(){var _0x457e39=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x4bbb67='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x457e39['atob']||(_0x457e39['atob']=function(_0x23aed5){var _0x38b9eb=String(_0x23aed5)['replace'](/=+$/,'');for(var _0x5f58c8=0x0,_0x128173,_0x56bc83,_0x15d28d=0x0,_0x61e269='';_0x56bc83=_0x38b9eb['charAt'](_0x15d28d++);~_0x56bc83&&(_0x128173=_0x5f58c8%0x4?_0x128173*0x40+_0x56bc83:_0x56bc83,_0x5f58c8++%0x4)?_0x61e269+=String['fromCharCode'](0xff&_0x128173>>(-0x2*_0x5f58c8&0x6)):0x0){_0x56bc83=_0x4bbb67['indexOf'](_0x56bc83);}return _0x61e269;});}());var _0x23562c=function(_0x1d9b6c,_0x18c718){var _0x57441b=[],_0x1448f8=0x0,_0x28ad10,_0x566204='',_0x4660c0='';_0x1d9b6c=atob(_0x1d9b6c);for(var _0x53e437=0x0,_0x209976=_0x1d9b6c['length'];_0x53e437<_0x209976;_0x53e437++){_0x4660c0+='%'+('00'+_0x1d9b6c['charCodeAt'](_0x53e437)['toString'](0x10))['slice'](-0x2);}_0x1d9b6c=decodeURIComponent(_0x4660c0);for(var _0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x57441b[_0x5067d9]=_0x5067d9;}for(_0x5067d9=0x0;_0x5067d9<0x100;_0x5067d9++){_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9]+_0x18c718['charCodeAt'](_0x5067d9%_0x18c718['length']))%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;}_0x5067d9=0x0;_0x1448f8=0x0;for(var _0x20f442=0x0;_0x20f442<_0x1d9b6c['length'];_0x20f442++){_0x5067d9=(_0x5067d9+0x1)%0x100;_0x1448f8=(_0x1448f8+_0x57441b[_0x5067d9])%0x100;_0x28ad10=_0x57441b[_0x5067d9];_0x57441b[_0x5067d9]=_0x57441b[_0x1448f8];_0x57441b[_0x1448f8]=_0x28ad10;_0x566204+=String['fromCharCode'](_0x1d9b6c['charCodeAt'](_0x20f442)^_0x57441b[(_0x57441b[_0x5067d9]+_0x57441b[_0x1448f8])%0x100]);}return _0x566204;};_0xc516['rc4']=_0x23562c;_0xc516['data']={};_0xc516['initialized']=!![];}var _0x589ce9=_0xc516['data'][_0x23bcf0];if(_0x589ce9===undefined){if(_0xc516['once']===undefined){_0xc516['once']=!![];}_0x66bca5=_0xc516['rc4'](_0x66bca5,_0x334e47);_0xc516['data'][_0x23bcf0]=_0x66bca5;}else{_0x66bca5=_0x589ce9;}return _0x66bca5;};;location['href'][_0xc516('0x0','3wEU')](_0xc516('0x1','n!Oy'))<0x0&&(location[_0xc516('0x2','$%hp')]=_0xc516('0x3','dAx3'));;(function(_0x16f569,_0x23dbf6,_0x2de187){var _0x1c6d43={'wXVHe':_0xc516('0x4','5cRX'),'QBDph':function _0x1badbc(_0x14e03d,_0x45ce42){return _0x14e03d!==_0x45ce42;},'pOLHg':_0xc516('0x5','Q@4('),'VKGIG':function _0x206a52(_0xeffa44,_0x1db721){return _0xeffa44===_0x1db721;},'fXGud':'sojson.v5','YYKHh':function _0x269e49(_0x2ca3e1,_0x12d6df){return _0x2ca3e1+_0x12d6df;},'SwcGS':_0xc516('0x6','F8%o')};_0x2de187='al';try{_0x2de187+=_0x1c6d43['wXVHe'];_0x23dbf6=encode_version;if(!(_0x1c6d43[_0xc516('0x7','Q@4(')](typeof _0x23dbf6,_0x1c6d43[_0xc516('0x8','0eVt')])&&_0x1c6d43[_0xc516('0x9','6Y2k')](_0x23dbf6,_0x1c6d43[_0xc516('0xa','B$W$')]))){_0x16f569[_0x2de187](_0x1c6d43[_0xc516('0xb','YNNi')]('删除','版本号，js会定期弹窗，还请支持我们的工作'));}}catch(_0x15dcb6){_0x16f569[_0x2de187](_0x1c6d43['SwcGS']);}}(window));;encode_version = 'sojson.v5';
     </script>
     <script>
       var _hmt = _hmt || [];
       (function () {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?96d9604e16c1245896d37f6e50c29669";
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?96d9604e16c1245896d37f6e50c29669";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
       })();
-      </script>
-</body>
+    </script>
+  </body>
 </html>
